@@ -1,0 +1,75 @@
+service: serverless-graphql-apollo
+
+frameworkVersion: ">=1.21.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: us-west-2
+  environment:
+    DB_USER: ${self:custom.databaseUser}
+    DB_PASSWORD: ${self:custom.databasePassword}
+    DB_HOST:
+      Fn::GetAtt [GlobalDatabase, Endpoint.Address]
+    DB_PORT:
+      Fn::GetAtt [GlobalDatabase, Endpoint.Port]
+    DB_NAME: ${self:custom.databaseName}
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+
+custom:
+  serverless-offline:
+    port: 4000
+    babelOptions:
+      presets: ["es2015", "stage-2"]
+  webpackIncludeModules: true
+  databaseUser: ${opt:database-user, "postgres"}
+  databasePassword: ${opt:database-password, ""}
+  databaseName: ${opt:database-name, "spend"}
+
+functions:
+  graphql:
+    handler: handler.graphqlHandler
+    events:
+    - http:
+        authorizer: aws_iam
+        cors: true
+        method: post
+        path: graphql
+  playground:
+    handler: handler.playgroundHandler
+    events:
+    - http:
+        cors: true
+        method: get
+        path: playground
+  graphiql:
+    handler: handler.graphiqlHandler
+    events:
+    - http:
+        cors: true
+        method: get
+        path: graphiql
+
+resources:
+  Resources:
+    GlobalDatabase:
+      Type: AWS::RDS::DBInstance
+      Properties:
+        AllocatedStorage: 20
+        AvailabilityZone: us-west-2a
+        BackupRetentionPeriod: 7
+        DBInstanceClass: db.t2.micro
+        DBInstanceIdentifier: spend-db
+        DBName: ${self:custom.databaseName}
+        Engine: postgres
+        EngineVersion: 9.6.3
+        MasterUsername: ${self:custom.databaseUser}
+        MasterUserPassword: ${self:custom.databasePassword}
+    UserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: ApplicationUsers
