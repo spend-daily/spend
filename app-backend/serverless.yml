@@ -1,4 +1,4 @@
-service: serverless-graphql-apollo
+service: spend-daily
 
 frameworkVersion: ">=1.21.0 <2.0.0"
 
@@ -11,10 +11,11 @@ provider:
     DB_USER: ${self:custom.databaseUser}
     DB_PASSWORD: ${self:custom.databasePassword}
     DB_HOST:
-      Fn::GetAtt [GlobalDatabase, Endpoint.Address]
+      Fn::GetAtt: [GlobalDatabase, Endpoint.Address]
     DB_PORT:
-      Fn::GetAtt [GlobalDatabase, Endpoint.Port]
+      Fn::GetAtt: [GlobalDatabase, Endpoint.Port]
     DB_NAME: ${self:custom.databaseName}
+    STAGE: ${opt:stage}
 
 plugins:
   - serverless-offline
@@ -23,22 +24,32 @@ plugins:
 custom:
   serverless-offline:
     port: 4000
-    babelOptions:
-      presets: ["es2015", "stage-2"]
   webpackIncludeModules: true
-  databaseUser: ${opt:database-user, "postgres"}
-  databasePassword: ${opt:database-password, ""}
-  databaseName: ${opt:database-name, "spend"}
+  databaseUser: ${env:DB_USER, "spend"}
+  databasePassword: ${env:DB_PASSWORD, "QtkX4KbFm84p3MZLL2J6G3dv6vTHYNzU"}
+  databaseName: ${env:DB_NAME, "spend"}
 
 functions:
   graphql:
-    handler: handler.graphqlHandler
+    handler: graphql/index.default
     events:
     - http:
-        authorizer: aws_iam
+        authorizer:
+          arn: arn:aws:cognito-idp:us-west-2:181782121001:userpool/us-west-2_1iKeHP5lG
         cors: true
         method: post
         path: graphql
+
+  postUserConfirmation:
+    handler: post-user-confirmation/index.default
+    events:
+    - cognitoUserPool:
+        pool: UserPool
+        trigger: PostConfirmation
+
+  preTokenCreation:
+    handler: pre-token-creation/index.default
+
   playground:
     handler: handler.playgroundHandler
     events:
@@ -46,6 +57,7 @@ functions:
         cors: true
         method: get
         path: playground
+
   graphiql:
     handler: handler.graphiqlHandler
     events:
@@ -69,7 +81,14 @@ resources:
         EngineVersion: 9.6.3
         MasterUsername: ${self:custom.databaseUser}
         MasterUserPassword: ${self:custom.databasePassword}
-    UserPool:
+    CognitoUserPoolUserPool:
       Type: AWS::Cognito::UserPool
       Properties:
-        UserPoolName: ApplicationUsers
+        UserPoolName: UserPool
+    WebApplication:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        ClientName: WebApplication
+        GenerateSecret: false
+        UserPoolId:
+          Ref: CognitoUserPoolUserPool

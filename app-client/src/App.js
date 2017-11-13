@@ -25,8 +25,7 @@ import './App.css'
 
 
 const httpLink = createHttpLink({
-  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
-  credentials: 'include'
+  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT
 })
 
 const authLink = new ApolloLink((operation, forward) => {

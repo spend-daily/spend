@@ -10,8 +10,9 @@
     "test": "jest",
     "start-client-local": "cd ../app-client/ && env-cmd ../config/security.env.local yarn start",
     "start-client-prod": "cd ../app-client/ && env-cmd ../config/security.env.prod yarn start",
-    "start-server-lambda:offline": "env-cmd ../config/security.env.local serverless offline start",
-    "deploy-server-lambda-prod": "serverless --stage=production deploy"
+    "start-server": "env-cmd ../config/security.env.local serverless offline start",
+    "deploy-prod": "serverless --stage=production deploy",
+    "deploy-dev": " env-cmd ../config/security.env.prod sls --stage=development --region=us-west-2 deploy"
   },
   "dependencies": {
     "apollo-server-lambda": "^1.2.0",
@@ -19,8 +20,11 @@
     "babel-runtime": "^6.25.0",
     "graphql": "0.10.5",
     "graphql-playground-middleware": "^1.1.0",
+    "knex": "^0.14.0",
+    "lodash.get": "^4.4.2",
     "node-fetch": "^1.7.3",
     "oauth": "^0.9.15",
+    "pg": "^7.4.0",
     "pg-pool": "^2.0.3",
     "postgraphql": "^3.5.1"
   },

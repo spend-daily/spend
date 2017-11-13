@@ -8,23 +8,16 @@ import AWS from 'aws-sdk'
 
 AWS.config.region = 'us-west-2'
 
+console.log(process.env)
 const poolData = {
-  UserPoolId: 'us-west-2_F9kcsYhXB',
-  ClientId: '5l3l9ns71bsgsoic4b5kujj3rh'
+  UserPoolId: process.env.REACT_APP_COGNITO_POOL_ID,
+  ClientId: process.env.REACT_APP_COGNITO_CLIENT_ID
 }
 const userPool = new CognitoUserPool(poolData)
 
-export async function register({ email, password }) {
+export async function register({ name, password }) {
   return new Promise((resolve, reject) => {
-    let attributeList = [
-      new CognitoUserAttribute({
-        Name : 'email',
-        Value : email
-      })
-    ]
-    
-    // sign the user up!
-    userPool.signUp(email, password, attributeList, null, (error, result) => {
+    userPool.signUp(name, password, [], null, (error, result) => {
         if (error) {
           return reject(error)
         }
@@ -38,16 +31,16 @@ export async function register({ email, password }) {
   })
 }
 
-export async function login({ email, password }) {
+export async function login({ name, password }) {
   return new Promise((resolve, reject) => {
     let cognitoUser = new CognitoUser({
-      Username: email,
+      Username: name,
       Pool: userPool
     })
 
     cognitoUser.authenticateUser(
       new AuthenticationDetails({
-        Username: email,
+        Username: name,
         Password: password
       }),
       {

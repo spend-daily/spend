@@ -22,11 +22,11 @@ export class Authenticate extends Component {
           <Grid item xs={12}>
             <FormControl fullWidth>
               <TextField
-                id="email"
-                label="email"
+                id="name"
+                label="name"
                 margin="normal"
-                onChange={this.props.onEmailChange}
-                value={this.props.email || ''}
+                onChange={this.props.onNameChange}
+                value={this.props.name || ''}
               />
             </FormControl>
           </Grid>
@@ -77,18 +77,18 @@ export class HistoryAuthenticate extends Component {
 
   buildCredentials() {
     return {
-      email: queryString.parse(this.props.location.search).email,
+      name: queryString.parse(this.props.location.search).name,
       password: this.state.password
     }
   }
 
-  onEmailChange = (event) => {
+  onNameChange = (event) => {
     this.props.history.push({
-      search: `?email=${event.target.value}`
+      search: `?name=${event.target.value}`
     })
   }
 
-  clearEmail() {
+  clearName() {
     this.props.history.push({
       search: ''
     })
@@ -128,13 +128,13 @@ export class HistoryAuthenticate extends Component {
 
   render() {
     const {
-      email
+      name
     } = queryString.parse(this.props.location.search)
 
     return (
       <Authenticate
-        onEmailChange={this.onEmailChange}
-        email={email}
+        onNameChange={this.onNameChange}
+        name={name}
         onPasswordChange={this.onPasswordChange}
         password={this.state.password}
         onRegister={this.onRegister}

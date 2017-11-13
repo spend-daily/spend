@@ -1,5 +1,4 @@
-import 'babel-polyfill'
-
+import _get from 'lodash.get'
 import {
   createPostGraphQLSchema,
   withPostGraphQLContext
@@ -24,12 +23,12 @@ const pool = new Pool({
 })
 
 export default async function graphqlHandler(event, context, callback) {
-  console.log(event.requestContext.authorizer.claims)
+  const userId = _get(event, 'requestContext.authorizer.claims.sub')
   const postgraphQLSchema = await postgraphQLSchemaPromise
   const result = await withPostGraphQLContext(
     {
       pgPool: pool,
-      pgDefaultRole: config.DB_USER,
+      pgDefaultRole: userId || config.USER,
     },
     async context => {
       return await graphql(
@@ -41,9 +40,11 @@ export default async function graphqlHandler(event, context, callback) {
       )
     }
   )
-  callback(null, {
+  console.log(`Query finished for ${userId}`)
+  return context.succeed({
     headers: {
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true
     },
     body: JSON.stringify(result),
     statusCode: 200
