@@ -6,6 +6,9 @@ import {
   Grid,
   TextField
 } from 'material-ui'
+import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
+import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
+import { DateTimePicker } from 'material-ui-pickers'
 import uuid from 'uuid/v4'
 import {
   allTransactions,
@@ -13,30 +16,32 @@ import {
 } from './queries'
 
 export class AddTransaction extends Component {
-  state = {}
+  state = {
+    amount: '',
+    memo: '',
+    time: new Date()
+  }
 
   updateMemo = event => {
-    this.setState({
-      memo: event.target.value
-    })
+    this.setState({ memo: event.target.value })
   }
 
   updateAmount = event => {
-    this.setState({
-      amount: event.target.value
-    })
+    this.setState({ amount: event.target.value })
+  }
+
+  updateDateTime = dateTime => {
+    this.setState({ time: dateTime })
   }
 
   addTransaction() {
     const id = uuid()
-    const { amount, memo } = this.state
     this.props.mutate({
       variables: {
         transaction: {
           transaction: {
-            id,
-            amount,
-            memo
+            ...this.state,
+            id
           }
         }
       },
@@ -45,9 +50,8 @@ export class AddTransaction extends Component {
         const data = proxy.readQuery({ query: allTransactions })
         data.allTransactions.edges.push({
           node: {
+            ...this.state,
             id,
-            memo,
-            amount,
             __typename: 'Transaction'
           },
           __typename: 'TransactionsEdge'
@@ -65,22 +69,32 @@ export class AddTransaction extends Component {
             <TextField
               id="memo"
               label="memo"
-              value={this.state.memo || ''}
+              value={this.state.memo}
               fullWidth
               onChange={this.updateMemo}
             />
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={2}>
             <TextField
               id="amount"
               label="amount"
               type="number"
-              value={this.state.amount || ''}
+              value={this.state.amount}
               fullWidth
               onChange={this.updateAmount}
             />
           </Grid>
-          <Grid item xs={6} sm={3}>
+          <Grid item xs={6} sm={2}>
+            <DateTimePicker
+              autoOk
+              disableFuture
+              leftArrowIcon={<KeyboardArrowLeft />}
+              rightArrowIcon={<KeyboardArrowRight />}
+              onChange={this.updateDateTime}
+              value={this.state.time}
+            />
+          </Grid>
+          <Grid item xs={6} sm={2}>
             <Button
               color="primary"
               raised

@@ -5,9 +5,10 @@ export const allTransactions = gql`
     allTransactions {
       edges {
         node {
-          id,
-          memo,
+          id
+          memo
           amount
+          time
         }
       }
     }
@@ -19,9 +20,9 @@ export const createTransaction = gql`
     createTransaction(input: $transaction) {
       transaction {
         id
-        __typename
         memo
         amount
+        time
       }
     }
   }
@@ -32,7 +33,6 @@ export const deleteTransaction = gql`
     deleteTransactionById(input: $transaction) {
       transaction {
         id
-        __typename
       }
     }
   }

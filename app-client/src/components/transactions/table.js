@@ -19,21 +19,25 @@ import IconButton from 'material-ui/IconButton'
 import Tooltip from 'material-ui/Tooltip'
 import DeleteIcon from 'material-ui-icons/Delete'
 import FilterListIcon from 'material-ui-icons/FilterList'
+import AccessTime from 'material-ui-icons/AccessTime'
+import AttachMoney from 'material-ui-icons/AttachMoney'
+import Time from 'react-time'
 
 import { allTransactions, deleteTransaction } from './queries';
 
 const columnData = [{
   id: 'id',
-  numeric: false,
   label: 'ID'
 }, {
   id: 'memo',
-  numeric: false,
   label: 'Memo'
 }, {
   id: 'amount',
   numeric: true,
-  label: 'amount'
+  label: <AttachMoney />
+}, {
+  id: 'time',
+  label: <AccessTime />
 }]
 
 class EnhancedTableHead extends React.Component {
@@ -271,6 +275,16 @@ class EnhancedTable extends React.Component {
                       </TableCell>
                       <TableCell>{n.memo}</TableCell>
                       <TableCell numeric>{n.amount}</TableCell>
+                      <TableCell>
+                        <Time
+                          format="MM/DD/YY hh:mm"
+                          titleFormat="MM/DD/YY hh:mm"
+                          relative={
+                            new Date().toDateString() === new Date(n.time).toDateString()
+                          }
+                          value={n.time}
+                        />
+                      </TableCell>
                       <TableCell>
                         <$DeleteButton id={n.id} />
                       </TableCell>
