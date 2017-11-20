@@ -1,3 +1,6 @@
+create extension if not exists 'postgis';
+create extension if not exists 'uuid-ossp';
+
 alter table transactions enable row level security;
 
 create policy transaction_owner

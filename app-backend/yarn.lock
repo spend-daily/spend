@@ -3792,11 +3792,11 @@ pg-pool@1.*:
     generic-pool "2.4.3"
     object-assign "4.1.0"
 
-pg-pool@^2.0.3, pg-pool@~2.0.3:
+pg-pool@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-2.0.3.tgz#c022032c8949f312a4f91fb6409ce04076be3257"
 
-pg-types@1.*, pg-types@~1.12.1:
+pg-types@1.*:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/pg-types/-/pg-types-1.12.1.tgz#d64087e3903b58ffaad279e7595c52208a14c3d2"
   dependencies:
@@ -3805,7 +3805,7 @@ pg-types@1.*, pg-types@~1.12.1:
     postgres-date "~1.0.0"
     postgres-interval "^1.1.0"
 
-pg@^6.1.0:
+pg@6, pg@^6.1.0:
   version "6.4.2"
   resolved "https://registry.yarnpkg.com/pg/-/pg-6.4.2.tgz#c364011060eac7a507a2ae063eb857ece910e27f"
   dependencies:
@@ -3818,20 +3818,7 @@ pg@^6.1.0:
     pgpass "1.*"
     semver "4.3.2"
 
-pg@^7.4.0:
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/pg/-/pg-7.4.0.tgz#e256061d2c52723c3c858defb97f1159ca660f83"
-  dependencies:
-    buffer-writer "1.0.1"
-    js-string-escape "1.0.1"
-    packet-reader "0.3.1"
-    pg-connection-string "0.1.3"
-    pg-pool "~2.0.3"
-    pg-types "~1.12.1"
-    pgpass "1.x"
-    semver "4.3.2"
-
-pgpass@1.*, pgpass@1.x:
+pgpass@1.*:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/pgpass/-/pgpass-1.0.2.tgz#2a7bb41b6065b67907e91da1b07c1847c877b306"
   dependencies:

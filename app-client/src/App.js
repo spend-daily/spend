@@ -20,9 +20,11 @@ import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
 import { HistoryAuthenticate } from './components/authenticate'
+import { refresh } from './components/authenticate/cognito'
 import { Home } from './components/home'
 import './App.css'
 
+refresh()
 
 const httpLink = createHttpLink({
   uri: process.env.REACT_APP_GRAPHQL_ENDPOINT

@@ -26,7 +26,8 @@ custom:
     port: 4000
   webpackIncludeModules: true
   databaseUser: ${env:DB_USER, "spend"}
-  databasePassword: ${env:DB_PASSWORD, "QtkX4KbFm84p3MZLL2J6G3dv6vTHYNzU"}
+  databasePassword: ${env:DB_PASSWORD, ""}
+  databaseHost: ${env:DB_HOST, "localhost"}
   databaseName: ${env:DB_NAME, "spend"}
 
 functions:

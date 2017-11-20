@@ -2,7 +2,6 @@ import {
   AuthenticationDetails,
   CognitoUser,
   CognitoUserPool,
-  CognitoUserAttribute,
 } from 'amazon-cognito-identity-js'
 import AWS from 'aws-sdk'
 
@@ -18,15 +17,15 @@ const userPool = new CognitoUserPool(poolData)
 export async function register({ name, password }) {
   return new Promise((resolve, reject) => {
     userPool.signUp(name, password, [], null, (error, result) => {
-        if (error) {
-          return reject(error)
-        }
+      if (error) {
+        return reject(error)
+      }
 
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-          IdentityPoolId: poolData.IdentityPoolId
-        })
-        
-        resolve(result.user)
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: poolData.IdentityPoolId
+      })
+
+      resolve(result.user)
     })
   })
 }
@@ -44,19 +43,19 @@ export async function login({ name, password }) {
         Password: password
       }),
       {
-        onSuccess: (result) => {
-          localStorage.setItem(
-            'token',
-            result.idToken.jwtToken
-          )
-          localStorage.setItem(
-            'refresh',
-            result.refreshToken.token
-          )
+        onSuccess: result => {
+          localStorage.setItem('token', result.idToken.jwtToken)
+          localStorage.setItem('refresh', result.refreshToken.token)
           resolve()
         },
         onFailure: reject
       }
     )
+  })
+}
+
+export async function refresh() {
+  return new Promise((resolve, reject) => {
+    resolve()
   })
 }
