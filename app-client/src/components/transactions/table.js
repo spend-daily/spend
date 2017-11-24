@@ -128,13 +128,7 @@ let EnhancedTableToolbar = props => {
         <Typography type="title">Transactions</Typography>
       </div>
       <div className={classes.spacer} />
-      <div className={classes.actions}>
-        <Tooltip title="Filter list">
-          <IconButton aria-label="Filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      </div>
+      <div className={classes.actions} />
     </Toolbar>
   )
 }
