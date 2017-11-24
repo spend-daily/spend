@@ -225,9 +225,15 @@ const $DeleteButton = graphql(
 
 class EnhancedTable extends React.Component {
   state = {
-      order: 'asc',
-      orderBy: 'amount',
-      data: []
+      data: this.sortData('desc', 'time'),
+      order: 'desc',
+      orderBy: 'time'
+  }
+
+  sortData(order, orderBy) {
+    return order === 'desc'
+      ? this.props.data.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
+      : this.props.data.sort((a, b)=> (a[orderBy] < b[orderBy] ? -1 : 1))
   }
 
   handleRequestSort = (event, property) => {
@@ -238,18 +244,16 @@ class EnhancedTable extends React.Component {
       order = 'asc'
     }
 
-    const data =
-      order === 'desc'
-        ? this.state.data.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
-        : this.state.data.sort((a, b)=> (a[orderBy] < b[orderBy] ? -1 : 1))
-
-    this.setState({ data, order, orderBy })
+    this.setState({
+      data: this.sortData(order, orderBy),
+      order,
+      orderBy
+    })
   }
 
   render() {
-    const { classes, data } = this.props
-    const { order, orderBy } = this.state
-    console.log(data)
+    const { classes } = this.props
+    const { data, order, orderBy } = this.state
 
     return (
       <Paper className={classes.root}>
@@ -271,11 +275,15 @@ class EnhancedTable extends React.Component {
                       key={n.id}
                     >
                       <TableCell padding="dense">
-                        {`...${n.id.substr(-5)}`}
+                        {`...${n.id.substr(-7)}`}
                       </TableCell>
                       <TableCell>{n.memo}</TableCell>
-                      <TableCell numeric>{n.amount}</TableCell>
-                      <TableCell>
+                      <TableCell
+                        numeric
+                        padding="dense">
+                        {n.amount}
+                      </TableCell>
+                      <TableCell padding="dense">
                         <Time
                           format="MM/DD/YY hh:mm"
                           titleFormat="MM/DD/YY hh:mm"
@@ -285,7 +293,7 @@ class EnhancedTable extends React.Component {
                           value={n.time}
                         />
                       </TableCell>
-                      <TableCell>
+                      <TableCell padding="dense">
                         <$DeleteButton id={n.id} />
                       </TableCell>
                     </TableRow>
