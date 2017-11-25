@@ -22,6 +22,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import { HistoryAuthenticate } from './components/authenticate'
 import { refresh } from './components/authenticate/cognito'
 import { Home } from './components/home'
+import $AddTransaction from './components/transactions/add'
+import Floaters from './components/floaters'
 import './App.css'
 
 refresh()
@@ -67,6 +69,9 @@ class App extends Component {
                 </Grid>
               </Grid>
             </Grid>
+            <Route path="/home/add" component={$AddTransaction} />
+            <Route path="/home/add-recurring" component={$AddTransaction} />
+            <Floaters />
           </div>
         </BrowserRouter>
       </ApolloProvider>

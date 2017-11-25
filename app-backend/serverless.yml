@@ -15,7 +15,7 @@ provider:
     DB_PORT:
       Fn::GetAtt: [GlobalDatabase, Endpoint.Port]
     DB_NAME: ${self:custom.databaseName}
-    STAGE: ${opt:stage}
+    STAGE: ${opt:stage, "development"}
 
 plugins:
   - serverless-offline
@@ -27,7 +27,6 @@ custom:
   webpackIncludeModules: true
   databaseUser: ${env:DB_USER, "spend"}
   databasePassword: ${env:DB_PASSWORD, ""}
-  databaseHost: ${env:DB_HOST, "localhost"}
   databaseName: ${env:DB_NAME, "spend"}
 
 functions:

@@ -10,7 +10,8 @@
     "test": "jest",
     "start-client-local": "cd ../app-client/ && env-cmd ../config/security.env.local yarn start",
     "start-client-prod": "cd ../app-client/ && env-cmd ../config/security.env.prod yarn start",
-    "start-server": "env-cmd ../config/security.env.dev serverless offline start",
+    "start-server-local": "env-cmd ../config/security.env.local serverless offline start",
+    "start-server-dev": "env-cmd ../config/security.env.dev serverless offline start",
     "deploy-prod": "serverless --stage=production deploy",
     "deploy-dev": " env-cmd ../config/security.env.dev sls --stage=development --region=us-west-2 deploy"
   },
