@@ -59,7 +59,6 @@ export class AddTransaction extends Component {
           transaction
         }
       },
-      // TODO `optimisticUpdate`
       update: (proxy) => {
         const data = proxy.readQuery({ query: allTransactions })
         data.allTransactions.edges.push({
@@ -123,7 +122,7 @@ export class AddTransaction extends Component {
             Cancel
           </Button>
           <Button
-            color="primary"
+            color="accent"
             raised
             onClick={this.addTransaction}>
             {this.state.isSaving

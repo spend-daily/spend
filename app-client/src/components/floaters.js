@@ -44,7 +44,7 @@ class Floaters extends React.Component {
       this.setState({
         open: false
       })
-    }, 1000)
+    }, 300)
   }
 
   render() {

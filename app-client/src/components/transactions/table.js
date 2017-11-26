@@ -165,7 +165,6 @@ class DeleteButton extends React.Component {
             id
           }
         },
-        // TODO `optimisticUpdate`
         update: (proxy) => {
           const data = proxy.readQuery({ query: allTransactions })
           const transactionIndex = findIndex(
@@ -179,10 +178,7 @@ class DeleteButton extends React.Component {
           } else {
             console.info(`Could not optimistically remove transaction ${id}`)
           }
-        }
-      })
-      .then(() => {
-        if (this) {
+
           this.setState({
             isDeleting: false
           })
@@ -219,12 +215,12 @@ const $DeleteButton = graphql(
 
 class EnhancedTable extends React.Component {
   state = {
-      data: this.sortData('desc', 'time'),
       order: 'desc',
       orderBy: 'time'
   }
 
-  sortData(order, orderBy) {
+  getSortedData() {
+    const { order, orderBy } = this.state
     return order === 'desc'
       ? this.props.data.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
       : this.props.data.sort((a, b)=> (a[orderBy] < b[orderBy] ? -1 : 1))
@@ -239,7 +235,6 @@ class EnhancedTable extends React.Component {
     }
 
     this.setState({
-      data: this.sortData(order, orderBy),
       order,
       orderBy
     })
@@ -247,7 +242,9 @@ class EnhancedTable extends React.Component {
 
   render() {
     const { classes } = this.props
-    const { data, order, orderBy } = this.state
+    const { order, orderBy } = this.state
+
+    const data = this.getSortedData()
 
     return (
       <Paper className={classes.root}>

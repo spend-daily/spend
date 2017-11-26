@@ -9,9 +9,12 @@ import {
 
 export function TransactionList({ data }) {
   if (data.loading || !data.allTransactions) return null
+  const transactions = data.allTransactions.edges.map(
+    edge => edge.node
+  )
   return (
     <div>
-      <Table data={data.allTransactions.edges.map(edge => (edge.node))} />
+      <Table data={transactions} />
     </div>
   )
 }
