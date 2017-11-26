@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  height: calc(100vh - 64px);
+  padding-top: 64px;
 }
 
 .app-container {

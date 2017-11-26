@@ -12,7 +12,22 @@ export const allTransactions = gql`
         }
       }
     }
-} 
+  }
+`
+
+export const allTransactionsByDay = gql`
+  query AllTransactionDays($condition: TransactionsByDayCondition) {
+    allTransactionsByDays(condition: $condition) {
+      edges {
+        node {
+          id
+          memo
+          amount
+          time
+        }
+      }
+    }
+  }
 `
 
 export const createTransaction = gql`

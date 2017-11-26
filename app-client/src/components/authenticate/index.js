@@ -132,14 +132,22 @@ export class HistoryAuthenticate extends Component {
     } = queryString.parse(this.props.location.search)
 
     return (
-      <Authenticate
-        onNameChange={this.onNameChange}
-        name={name}
-        onPasswordChange={this.onPasswordChange}
-        password={this.state.password}
-        onRegister={this.onRegister}
-        onLogin={this.onLogin}
-      />
+      <Grid container alignItems="center" className="app-container">
+        <Grid item xs={12}>
+          <Grid container justify="center">
+            <Grid item>
+              <Authenticate
+                onNameChange={this.onNameChange}
+                name={name}
+                onPasswordChange={this.onPasswordChange}
+                password={this.state.password}
+                onRegister={this.onRegister}
+                onLogin={this.onLogin}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     )
   }
 }

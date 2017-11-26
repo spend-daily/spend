@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Grid,
   Toolbar,
   Typography
 } from 'material-ui'
@@ -59,16 +58,8 @@ class App extends Component {
                 </Typography>
               </Toolbar>
             </AppBar>
-            <Grid container alignItems="center" className="app-container">
-              <Grid item xs={12}>
-                <Grid container justify="center">
-                  <Grid item>
-                    <Route exact path="/" component={HistoryAuthenticate}/>
-                    <Route path="/home" component={Home}/>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
+            <Route exact path="/" component={HistoryAuthenticate} />
+            <Route path="/home" component={Home}/>
             <Route path="/home/add" component={$AddTransaction} />
             <Route path="/home/add-recurring" component={$AddTransaction} />
             <Floaters />
