@@ -15,9 +15,9 @@ export const allTransactions = gql`
   }
 `
 
-export const allTransactionsByDay = gql`
-  query AllTransactionDays($condition: TransactionsByDayCondition) {
-    allTransactionsByDays(condition: $condition) {
+export const allTransactionsByTime = gql`
+  query AllTransactionsByTime($condition: TransactionsByTimeCondition) {
+    allTransactionsByTime(condition: $condition) {
       edges {
         node {
           id

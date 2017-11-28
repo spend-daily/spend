@@ -1,11 +1,13 @@
 import {
   AppBar,
+  Button,
   Toolbar,
   Typography
 } from 'material-ui'
 import React, { Component } from 'react'
 import {
   BrowserRouter,
+  Link,
   Route
 } from 'react-router-dom'
 import {
@@ -45,21 +47,28 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink)
 })
 
+
+
 class App extends Component {
   render() {
+    const date = new Date()
+    const today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     return (
       <ApolloProvider client={client}>
         <BrowserRouter>
           <div className="App">
             <AppBar>
                 <Toolbar>
-                <Typography type="title" color="inherit">
-                  Save
-                </Typography>
+                  <Typography type="title" color="inherit">
+                    Save
+                  </Typography>
+                  <Link to={`/home/day/${today}`}>
+                    <Button color="contrast">Today</Button>
+                  </Link>
               </Toolbar>
             </AppBar>
+            <Home />
             <Route exact path="/" component={HistoryAuthenticate} />
-            <Route path="/home" component={Home}/>
             <Route path="/home/add" component={$AddTransaction} />
             <Route path="/home/add-recurring" component={$AddTransaction} />
             <Floaters />
