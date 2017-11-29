@@ -4,12 +4,16 @@ import { Route } from 'react-router'
 import queryString from 'query-string'
 
 import Table from './table'
+import Month from './month'
 import {
   allTransactions,
-  allTransactionsByTime
+  transactionList,
+  transactionDays,
+  transactionMonths,
+  transactionYears
 } from './queries'
 
-export function TransactionList({ data }) {
+export const $AllTransactionList = graphql(allTransactions)(({ data }) => {
   if (data.loading || !data.allTransactions) return null
   const transactions = data.allTransactions.edges.map(
     edge => edge.node
@@ -17,24 +21,41 @@ export function TransactionList({ data }) {
   return (
     <Table data={transactions} />
   )
-}
+})
 
-export const $TransactionList = graphql(allTransactions)(TransactionList)
-
-export const $TransactionsByTime = graphql(allTransactionsByTime, {
-  options: (props) => ({
+export const $TransactionList = graphql(transactionList, {
+  options: ({ match: { params: { year, month, day } } }) => ({
     variables: {
       condition: {
-        day: props.match.params.day
+        day: `${year}-${month}-${day}`
       }
     }
   })
 })(({ data }) => {
-  if (data.loading || !data.allTransactionsByTime) return null
-  const transactions = data.allTransactionsByTime.edges.map(
+  if (data.loading || !data.allTransactionLists) return null
+  const transactions = data.allTransactionLists.edges.map(
     edge => edge.node
   )
   return (
     <Table data={transactions} />
+  )
+})
+
+export const $TransactionMonth = graphql(transactionDays, {
+  options: ({ match: { params: { year, month } } }) => ({
+    variables: {
+      condition: {
+        year,
+        month
+      }
+    }
+  })
+})(({ data, match }) => {
+  if (data.loading || !data.allTransactionDays) return null
+  const transactions = data.allTransactionDays.edges.map(
+    edge => edge.node
+  )
+  return (
+    <Month data={transactions} {...match.params} />
   )
 })

@@ -21,47 +21,51 @@ CREATE TABLE spend.transactions (
 );
 
 -- views
-CREATE OR REPLACE VIEW transactions_by_day AS
+CREATE OR REPLACE VIEW transaction_list AS
 	SELECT
-		*,
-		time::date as "day"
-	FROM transactions;
-	
-CREATE OR REPLACE VIEW transactions_by_time AS
-	SELECT
-		*,
 		time::date as "day",
-		date_part('week', time) week,
-		date_part('month', time) "month",
-		date_part('year', time) "year"
+		*
 	FROM transactions;
 	
-CREATE OR REPLACE VIEW transaction_metrics_by_week AS
-	SELECT
-		user_id,
-		"week",
-		sum(amount),
-		count(id)
-	FROM transactions_by_time
-	GROUP BY user_id, "week";
 	
-CREATE OR REPLACE VIEW transaction_metrics_by_month AS
+CREATE OR REPLACE VIEW transaction_days AS
 	SELECT
-		user_id,
-		"month",
+		date_part('year', time) "year",
+		date_part('month', time) "month",
+		date_part('day', time) "day",
 		sum(amount),
-		count(id)
-	FROM transactions_by_time
-	GROUP BY user_id, "month";
-	
-CREATE OR REPLACE VIEW transaction_metrics_by_year AS
-	SELECT
-		user_id,
+		count(id),
+		user_id
+	FROM transactions
+	GROUP BY
+		"user_id",
 		"year",
+		"month",
+		"day";
+	
+CREATE OR REPLACE VIEW transaction_months AS
+	SELECT
+		date_part('year', time) "year",
+		date_part('month', time) "month",
 		sum(amount),
-		count(id)
-	FROM transactions_by_time
-	GROUP BY user_id, "year";
+		count(id),
+		user_id
+	FROM spend.transactions
+	GROUP BY
+		"user_id",
+		"year",
+		"month";
+	
+CREATE OR REPLACE VIEW transaction_years AS
+	SELECT
+		date_part('year', time) "year",
+		sum(amount),
+		count(id),
+		user_id
+	FROM spend.transactions
+	GROUP BY
+		"user_id",
+		"year";
 	
 -- application roles	
 create role spender;

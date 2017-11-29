@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 
 import {
+  $AllTransactionList,
   $TransactionList,
-  $TransactionsByTime
+  $TransactionMonth
 } from '../transactions'
 
 export class Home extends Component {
   render() {
     return (
-      <div>
-        <Route path="/home" component={$TransactionList}/>
-        <Route path="/home/day/:day" component={$TransactionsByTime}/>
-      </div>
+      <Switch>
+        <Route path="/home/:year/:month/:day" component={$TransactionList}/>
+        <Route path="/home/:year/:month" component={$TransactionMonth} />
+        <Route path="/home/:year" />
+        <Route path="/home" component={$AllTransactionList}/>
+      </Switch>
     )
   }
 }

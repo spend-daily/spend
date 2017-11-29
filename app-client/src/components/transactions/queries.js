@@ -15,15 +15,60 @@ export const allTransactions = gql`
   }
 `
 
-export const allTransactionsByTime = gql`
-  query AllTransactionsByTime($condition: TransactionsByTimeCondition) {
-    allTransactionsByTime(condition: $condition) {
+export const transactionList = gql`
+  query TransactionList($condition: TransactionListCondition) {
+    allTransactionLists(condition: $condition) {
       edges {
         node {
           id
-          memo
           amount
+          memo
           time
+        }
+      }
+    }
+  }
+`
+
+export const transactionDays = gql`
+  query TransactionDays($condition: TransactionDayCondition) {
+    allTransactionDays(condition: $condition) {
+      edges {
+        node {
+          year
+          month
+          day
+          sum
+          count
+        }
+      }
+    }
+  }
+`
+
+export const transactionMonths = gql`
+  query TransactionMonths($condition: TransactionMonthCondition) {
+    allTransactionMonths(condition: $condition) {
+      edges {
+        node {
+          year
+          month
+          sum
+          count
+        }
+      }
+    }
+  }
+`
+
+export const transactionYears = gql`
+  query TransactionYears($condition: TransactionYearCondition) {
+    allTransactionYears(condition: $condition) {
+      edges {
+        node {
+          year
+          sum
+          count
         }
       }
     }

@@ -59,16 +59,13 @@ export class AddTransaction extends Component {
           transaction
         }
       },
+      refetch: [
+        'TransactionList',
+        'TransactionDays',
+        'TransactionMonths',
+        'TransactionYears'
+      ],
       update: (proxy) => {
-        const data = proxy.readQuery({ query: allTransactions })
-        data.allTransactions.edges.push({
-          node: {
-            ...transaction,
-            __typename: 'Transaction'
-          },
-          __typename: 'TransactionsEdge'
-        })
-        proxy.writeQuery({ query: allTransactions, data })
         this.setState({
           isSaving: false
         })

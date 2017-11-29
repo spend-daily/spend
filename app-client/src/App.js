@@ -52,7 +52,7 @@ const client = new ApolloClient({
 class App extends Component {
   render() {
     const date = new Date()
-    const today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    const today = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
     return (
       <ApolloProvider client={client}>
         <BrowserRouter>
@@ -62,7 +62,7 @@ class App extends Component {
                   <Typography type="title" color="inherit">
                     Save
                   </Typography>
-                  <Link to={`/home/day/${today}`}>
+                  <Link to={`/home/${today}`}>
                     <Button color="contrast">Today</Button>
                   </Link>
               </Toolbar>
