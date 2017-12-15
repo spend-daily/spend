@@ -1,7 +1,7 @@
 import {
   AuthenticationDetails,
   CognitoUser,
-  CognitoUserPool,
+  CognitoUserPool
 } from 'amazon-cognito-identity-js'
 import AWS from 'aws-sdk'
 

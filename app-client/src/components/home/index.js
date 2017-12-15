@@ -11,10 +11,10 @@ export class Home extends Component {
   render() {
     return (
       <Switch>
-        <Route path="/home/:year/:month/:day" component={$TransactionList}/>
+        <Route path="/home/:year/:month/:day" component={$TransactionList} />
         <Route path="/home/:year/:month" component={$TransactionMonth} />
         <Route path="/home/:year" />
-        <Route path="/home" component={$AllTransactionList}/>
+        <Route path="/home" component={$AllTransactionList} />
       </Switch>
     )
   }

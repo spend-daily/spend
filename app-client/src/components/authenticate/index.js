@@ -1,17 +1,8 @@
-import {
-  Button,
-  Card,
-  FormControl,
-  Grid,
-  TextField
-} from 'material-ui'
+import { Button, Card, FormControl, Grid, TextField } from 'material-ui'
 import React, { Component } from 'react'
 import queryString from 'query-string'
 
-import {
-  login,
-  register
-} from './cognito'
+import { login, register } from './cognito'
 import './style.css'
 
 export class Authenticate extends Component {
@@ -44,10 +35,7 @@ export class Authenticate extends Component {
           </Grid>
           <Grid item xs={6}>
             <FormControl fullWidth>
-              <Button
-                color="accent"
-                onClick={this.props.onRegister}
-              >
+              <Button color="accent" onClick={this.props.onRegister}>
                 Register
               </Button>
             </FormControl>
@@ -71,9 +59,7 @@ export class Authenticate extends Component {
 }
 
 export class HistoryAuthenticate extends Component {
-  state = {
-    
-  }
+  state = {}
 
   buildCredentials() {
     return {
@@ -82,7 +68,7 @@ export class HistoryAuthenticate extends Component {
     }
   }
 
-  onNameChange = (event) => {
+  onNameChange = event => {
     this.props.history.push({
       search: `?name=${event.target.value}`
     })
@@ -94,42 +80,38 @@ export class HistoryAuthenticate extends Component {
     })
   }
 
-  onPasswordChange = (event) => {
+  onPasswordChange = event => {
     this.setState({
       password: event.target.value
     })
   }
 
-  onRegister = async (event) => {
+  onRegister = async event => {
     try {
       await register(this.buildCredentials())
       this.props.history.push({
         pathname: '/registered',
         search: ''
       })
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }
 
-  onLogin = async (event) => {
+  onLogin = async event => {
     try {
       await login(this.buildCredentials())
       this.props.history.push({
         pathname: '/home',
         search: ''
       })
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
     }
   }
 
   render() {
-    const {
-      name
-    } = queryString.parse(this.props.location.search)
+    const { name } = queryString.parse(this.props.location.search)
 
     return (
       <Grid container alignItems="center" className="app-container">

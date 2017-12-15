@@ -15,12 +15,8 @@ import {
 
 export const $AllTransactionList = graphql(allTransactions)(({ data }) => {
   if (data.loading || !data.allTransactions) return null
-  const transactions = data.allTransactions.edges.map(
-    edge => edge.node
-  )
-  return (
-    <Table data={transactions} />
-  )
+  const transactions = data.allTransactions.edges.map(edge => edge.node)
+  return <Table data={transactions} />
 })
 
 export const $TransactionList = graphql(transactionList, {
@@ -33,12 +29,8 @@ export const $TransactionList = graphql(transactionList, {
   })
 })(({ data }) => {
   if (data.loading || !data.allTransactionLists) return null
-  const transactions = data.allTransactionLists.edges.map(
-    edge => edge.node
-  )
-  return (
-    <Table data={transactions} />
-  )
+  const transactions = data.allTransactionLists.edges.map(edge => edge.node)
+  return <Table data={transactions} />
 })
 
 export const $TransactionMonth = graphql(transactionDays, {
@@ -52,10 +44,6 @@ export const $TransactionMonth = graphql(transactionDays, {
   })
 })(({ data, match }) => {
   if (data.loading || !data.allTransactionDays) return null
-  const transactions = data.allTransactionDays.edges.map(
-    edge => edge.node
-  )
-  return (
-    <Month data={transactions} {...match.params} />
-  )
+  const transactions = data.allTransactionDays.edges.map(edge => edge.node)
+  return <Month data={transactions} {...match.params} />
 })

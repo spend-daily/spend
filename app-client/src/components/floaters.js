@@ -55,12 +55,8 @@ class Floaters extends React.Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        {this.state.open && 
-          <Tooltip
-            title="Recurring"
-            placement="left"
-            enterDelay={300}
-          >
+        {this.state.open && (
+          <Tooltip title="Recurring" placement="left" enterDelay={300}>
             <Link to="/home/add-recurring">
               <Button
                 fab
@@ -72,22 +68,18 @@ class Floaters extends React.Component {
               </Button>
             </Link>
           </Tooltip>
-        }
-        <Tooltip
-          title="Add"
-          placement="left"
-          enterDelay={300}
-        >
-        <Link to="/home/add">
-          <Button
-            fab
-            color="primary"
-            aria-label="add"
-            className={classes.button}
-          >
-            <AddIcon />
-          </Button>
-        </Link>
+        )}
+        <Tooltip title="Add" placement="left" enterDelay={300}>
+          <Link to="/home/add">
+            <Button
+              fab
+              color="primary"
+              aria-label="add"
+              className={classes.button}
+            >
+              <AddIcon />
+            </Button>
+          </Link>
         </Tooltip>
       </div>
     )

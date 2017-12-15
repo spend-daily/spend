@@ -12,14 +12,14 @@ module.exports = {
   externals: [
     nodeExternals(),
     {
-      'sqlite3': 'sqlite3',
-      'mariasql': 'mariasql',
-      'mssql': 'mssql',
-      'mysql': 'mysql',
-      'oracle': 'oracle',
+      sqlite3: 'sqlite3',
+      mariasql: 'mariasql',
+      mssql: 'mssql',
+      mysql: 'mysql',
+      oracle: 'oracle',
       'strong-oracle': 'strong-oracle',
-      'oracledb': 'oracledb',
-      'mysql2': 'mysql2',
+      oracledb: 'oracledb',
+      mysql2: 'mysql2',
       'pg-query-stream': 'pg-query-stream'
     }
   ],
@@ -31,14 +31,14 @@ module.exports = {
           'imports-loader?graphql',
           {
             loader: 'babel-loader'
-          },
-        ],
-      },
-    ],
+          }
+        ]
+      }
+    ]
   },
   output: {
     libraryTarget: 'commonjs',
     path: path.join(__dirname, '.webpack'),
-    filename: '[name].js',
-  },
-};
+    filename: '[name].js'
+  }
+}

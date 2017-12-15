@@ -1,25 +1,18 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
-import {
-  Button,
-  Grid,
-  TextField
-} from 'material-ui'
+import { Button, Grid, TextField } from 'material-ui'
 import { CircularProgress } from 'material-ui/Progress'
 import Dialog, {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
+  DialogTitle
+} from 'material-ui/Dialog'
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
 import { DateTimePicker } from 'material-ui-pickers'
 import uuid from 'uuid/v4'
-import {
-  allTransactions,
-  createTransaction
-} from './queries'
+import { allTransactions, createTransaction } from './queries'
 
 export class AddTransaction extends Component {
   state = {
@@ -65,7 +58,7 @@ export class AddTransaction extends Component {
         'TransactionMonths',
         'TransactionYears'
       ],
-      update: (proxy) => {
+      update: proxy => {
         this.setState({
           isSaving: false
         })
@@ -118,14 +111,8 @@ export class AddTransaction extends Component {
           <Button onClick={history.goBack} color="primary">
             Cancel
           </Button>
-          <Button
-            color="accent"
-            raised
-            onClick={this.addTransaction}>
-            {this.state.isSaving
-                ? <CircularProgress />
-                : 'Add'
-            }
+          <Button color="accent" raised onClick={this.addTransaction}>
+            {this.state.isSaving ? <CircularProgress /> : 'Add'}
           </Button>
         </DialogActions>
       </Dialog>
@@ -134,7 +121,7 @@ export class AddTransaction extends Component {
 }
 
 export default graphql(createTransaction, {
-  options: (props) => ({
+  options: props => ({
     variables: {
       transaction: {
         transaction: {

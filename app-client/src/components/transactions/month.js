@@ -10,7 +10,7 @@ const days = [
   'wednesday',
   'thursday',
   'friday',
-  'saturday',
+  'saturday'
 ]
 
 const styles = {
@@ -21,7 +21,7 @@ const styles = {
   },
   dayNames: {
     display: 'flex',
-    flexFlow: 'row nowrap',
+    flexFlow: 'row nowrap'
   },
   dayName: {
     flex: '1 0'
@@ -29,7 +29,7 @@ const styles = {
   month: {
     display: 'flex',
     flexFlow: 'column nowrap',
-    flex: '1 0',
+    flex: '1 0'
   },
   week: {
     display: 'flex',
@@ -66,11 +66,13 @@ const Day = ({ classes, dayOfMonth, transaction }) => {
       >
         <div className={classes.label}>{dayOfMonth}</div>
         <div className={classes.sum}>${transaction.sum}</div>
-        <div className={classes.count}>{transaction.count} transaction{transaction.count > 1 ? 's' : ''}</div>
+        <div className={classes.count}>
+          {transaction.count} transaction{transaction.count > 1 ? 's' : ''}
+        </div>
       </Link>
     )
   }
-  
+
   return (
     <div>
       <div className={classes.label}>{dayOfMonth}</div>
@@ -83,11 +85,11 @@ const $Day = withStyles(dayStyles)(Day)
 class Month extends React.Component {
   render() {
     const { classes, data, month, year } = this.props
-    const daysInMonth = new Date(year, (month - 1), 0).getDate()
-    const firstDayOfWeek = new Date(year, (month - 1), 1).getDay()
-    const weeks = new Array(
-      Math.ceil((daysInMonth + firstDayOfWeek) / 7)
-    ).fill(null)
+    const daysInMonth = new Date(year, month - 1, 0).getDate()
+    const firstDayOfWeek = new Date(year, month - 1, 1).getDay()
+    const weeks = new Array(Math.ceil((daysInMonth + firstDayOfWeek) / 7)).fill(
+      null
+    )
     let counter = 1
 
     return (
@@ -101,26 +103,23 @@ class Month extends React.Component {
         </div>
         <div className={classes.month}>
           {weeks.map((_, weekIndex) => (
-            <div
-              key={`week-${weekIndex}`}
-              className={classes.week}
-            >
+            <div key={`week-${weekIndex}`} className={classes.week}>
               {days.map((day, dayIndex) => (
                 <div
                   key={`week-${weekIndex}-day-${dayIndex}`}
                   className={classes.day}
                 >
-                  {(weekIndex || dayIndex >= firstDayOfWeek) && counter < daysInMonth
-                    ? <$Day
-                        dayOfMonth={counter++}
-                        transaction={find(data, { day: counter - 1 })}
-                      />
-                    : null
-                  }
+                  {(weekIndex || dayIndex >= firstDayOfWeek) &&
+                  counter < daysInMonth ? (
+                    <$Day
+                      dayOfMonth={counter++}
+                      transaction={find(data, { day: counter - 1 })}
+                    />
+                  ) : null}
                 </div>
               ))}
             </div>
-          ))} 
+          ))}
         </div>
       </div>
     )

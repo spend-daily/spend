@@ -1,8 +1,5 @@
 import _get from 'lodash.get'
-import {
-  createPostGraphQLSchema,
-  withPostGraphQLContext
-} from 'postgraphql'
+import { createPostGraphQLSchema, withPostGraphQLContext } from 'postgraphql'
 import Pool from 'pg-pool'
 import { graphql } from 'graphql'
 
@@ -34,7 +31,7 @@ export default async function graphqlHandler(event, context, callback) {
     const result = await withPostGraphQLContext(
       {
         pgPool: pool,
-        pgDefaultRole: userId || config.USER,
+        pgDefaultRole: userId || config.USER
       },
       async context => {
         return await graphql(
@@ -42,7 +39,7 @@ export default async function graphqlHandler(event, context, callback) {
           graphqlInput.query,
           null,
           { ...context },
-          graphqlInput.variables,
+          graphqlInput.variables
         )
       }
     )

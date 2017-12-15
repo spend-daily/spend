@@ -1,21 +1,8 @@
-import {
-  AppBar,
-  Button,
-  Toolbar,
-  Typography
-} from 'material-ui'
+import { AppBar, Button, Toolbar, Typography } from 'material-ui'
 import React, { Component } from 'react'
-import {
-  BrowserRouter,
-  Link,
-  Route
-} from 'react-router-dom'
-import {
-  ApolloProvider
-} from 'react-apollo'
-import {
-  ApolloClient
-} from 'apollo-client'
+import { BrowserRouter, Link, Route } from 'react-router-dom'
+import { ApolloProvider } from 'react-apollo'
+import { ApolloClient } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -47,24 +34,23 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink)
 })
 
-
-
 class App extends Component {
   render() {
     const date = new Date()
-    const today = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`
+    const today = `${date.getFullYear()}/${date.getMonth() +
+      1}/${date.getDate()}`
     return (
       <ApolloProvider client={client}>
         <BrowserRouter>
           <div className="App">
             <AppBar>
-                <Toolbar>
-                  <Typography type="title" color="inherit">
-                    Save
-                  </Typography>
-                  <Link to={`/home/${today}`}>
-                    <Button color="contrast">Today</Button>
-                  </Link>
+              <Toolbar>
+                <Typography type="title" color="inherit">
+                  Save
+                </Typography>
+                <Link to={`/home/${today}`}>
+                  <Button color="contrast">Today</Button>
+                </Link>
               </Toolbar>
             </AppBar>
             <Home />

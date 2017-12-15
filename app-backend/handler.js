@@ -9,12 +9,12 @@ exports.graphqlHandler = graphqlHandler
 exports.graphiqlHandler = graphiqlLambda({
   endpointURL: process.env.REACT_APP_GRAPHQL_ENDPOINT
     ? process.env.REACT_APP_GRAPHQL_ENDPOINT
-    : `/${process.env.STAGE}/graphql`,
+    : `/${process.env.STAGE}/graphql`
 })
 
 // for local endpointURL is /graphql and for prod it is /stage/graphql
 exports.playgroundHandler = lambdaPlayground({
   endpoint: process.env.REACT_APP_GRAPHQL_ENDPOINT
     ? process.env.REACT_APP_GRAPHQL_ENDPOINT
-    : `/${process.env.STAGE}/graphql`,
+    : `/${process.env.STAGE}/graphql`
 })

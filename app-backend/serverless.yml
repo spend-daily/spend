@@ -20,6 +20,7 @@ provider:
 plugins:
   - serverless-offline
   - serverless-webpack
+  - serverless-finch
 
 custom:
   serverless-offline:
@@ -28,6 +29,9 @@ custom:
   databaseUser: ${env:DB_USER, "spend"}
   databasePassword: ${env:DB_PASSWORD, ""}
   databaseName: ${env:DB_NAME, "spend"}
+  client:
+    bucketName: web-interface-distribution
+    distributionFolder: ../app-client/build
 
 functions:
   graphql:

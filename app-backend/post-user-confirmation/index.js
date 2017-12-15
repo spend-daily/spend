@@ -12,8 +12,7 @@ export default async function postUserConfirmation(event, context) {
   try {
     await db.raw(`create role "${userId}"`)
     await db.raw(`grant "${userId}" to spend`)
-  }
-  catch (error) {
+  } catch (error) {
     console.error(`role and grants not successful for user ${userId}`, error)
     return context.fail(event)
   }
