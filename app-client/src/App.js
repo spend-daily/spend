@@ -12,6 +12,7 @@ import { refresh } from './components/authenticate/cognito'
 import { Home } from './components/home'
 import $AddTransaction from './components/transactions/add'
 import Floaters from './components/floaters'
+import Navigation from './components/navigation'
 import './App.css'
 
 refresh()
@@ -51,6 +52,7 @@ class App extends Component {
                 <Link to={`/home/${today}`}>
                   <Button color="contrast">Today</Button>
                 </Link>
+                <Route path="/home/*" component={Navigation} />
               </Toolbar>
             </AppBar>
             <Home />
