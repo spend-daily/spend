@@ -33,7 +33,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy-dev": "sls client deploy --env development --region us-west-2"
+    "deploy-dev":
+      "env-cmd ../config/security.env.dev yarn build && cd ../app-backend && sls client deploy --env development --region us-west-2",
+    "deploy-prod":
+      "env-cmd ../config/security.env.prod yarn build && cd ../app-backend && sls client deploy --env production --region us-west-2"
   },
   "devDependencies": {
     "enzyme": "^3.1.0",
