@@ -16,7 +16,7 @@ const pool = new Pool({
   host: config.DB_HOST,
   port: config.DB_PORT,
   database: config.DB_NAME,
-  min: 1,
+  min: 0,
   max: 1
 })
 
