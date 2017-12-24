@@ -18,6 +18,7 @@
     "material-ui": "^1.0.0-beta.25",
     "material-ui-pickers": "^1.0.0-beta.3",
     "moment": "^2.19.2",
+    "postgraphql": "^4.0.0-alpha2.27",
     "prop-types": "^15.6.0",
     "query-string": "^5.0.1",
     "react": "^15.6.2",

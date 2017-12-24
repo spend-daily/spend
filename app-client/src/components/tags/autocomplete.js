@@ -105,7 +105,9 @@ class TagAutocomplete extends React.Component {
 }
 
 export default compose(
-  graphql(allTags),
+  graphql(allTags, {
+    name: 'allTags'
+  }),
   graphql(createTag, {
     name: 'createTag',
     options: props => ({
@@ -131,7 +133,7 @@ export default compose(
     })
   })
 )(props => {
-  if (props.data.loading) return null
-  const data = props.data.allTags.edges.map(edge => edge.node)
+  if (props.allTags.loading) return null
+  const data = props.allTags.allTags.edges.map(edge => edge.node)
   return <TagAutocomplete {...props} data={data} />
 })

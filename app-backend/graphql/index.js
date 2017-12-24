@@ -39,7 +39,8 @@ export default async function graphqlHandler(event, context, callback) {
           graphqlInput.query,
           null,
           { ...context },
-          graphqlInput.variables
+          graphqlInput.variables,
+          graphqlInput.operationName
         )
       }
     )

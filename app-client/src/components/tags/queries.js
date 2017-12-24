@@ -28,6 +28,7 @@ export const transactionTags = gql`
     allTransactionTags(condition: $condition) {
       edges {
         node {
+          transactionId
           tag: tagByTagId {
             id
             label
