@@ -5,14 +5,13 @@ import { CircularProgress } from 'material-ui/Progress'
 import Dialog, {
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle
 } from 'material-ui/Dialog'
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
 import { DateTimePicker } from 'material-ui-pickers'
 import uuid from 'uuid/v4'
-import { allTransactions, createTransaction } from './queries'
+import { createTransaction } from './queries'
 
 export class AddTransaction extends Component {
   state = {

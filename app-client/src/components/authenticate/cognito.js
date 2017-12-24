@@ -7,7 +7,6 @@ import AWS from 'aws-sdk'
 
 AWS.config.region = 'us-west-2'
 
-console.log(process.env)
 const poolData = {
   UserPoolId: process.env.REACT_APP_COGNITO_POOL_ID,
   ClientId: process.env.REACT_APP_COGNITO_CLIENT_ID

@@ -28,7 +28,7 @@ class TagAutocomplete extends React.Component {
 
   onKeyUp = async event => {
     if (event.keyCode === 13) {
-      let tag = await this.props.createTag({
+      await this.props.createTag({
         variables: {
           tag: {
             tag: {
@@ -46,7 +46,7 @@ class TagAutocomplete extends React.Component {
   }
 
   onClick = async tagId => {
-    let tag = await this.props.createTransactionTag({
+    await this.props.createTransactionTag({
       variables: {
         transactionTag: {
           transactionTag: {
