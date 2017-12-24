@@ -21,8 +21,10 @@ import DeleteIcon from 'material-ui-icons/Delete'
 import FilterListIcon from 'material-ui-icons/FilterList'
 import AccessTime from 'material-ui-icons/AccessTime'
 import AttachMoney from 'material-ui-icons/AttachMoney'
+import Label from 'material-ui-icons/Label'
 import Time from 'react-time'
 
+import Tags from '../tags'
 import { allTransactions, deleteTransaction } from './queries'
 
 const columnData = [
@@ -33,6 +35,10 @@ const columnData = [
   {
     id: 'memo',
     label: 'Memo'
+  },
+  {
+    id: 'tags',
+    label: <Label />
   },
   {
     id: 'amount',
@@ -251,15 +257,18 @@ class EnhancedTable extends React.Component {
               rowCount={data.length}
             />
             <TableBody>
-              {data.map(n => {
+              {data.map(transaction => {
                 return (
-                  <TableRow hover key={n.id}>
+                  <TableRow hover key={transaction.id}>
                     <TableCell padding="dense">
-                      {`...${n.id.substr(-7)}`}
+                      {`...${transaction.id.substr(-7)}`}
                     </TableCell>
-                    <TableCell>{n.memo}</TableCell>
+                    <TableCell>{transaction.memo}</TableCell>
+                    <TableCell padding="dense">
+                      <Tags transactionId={transaction.id} />
+                    </TableCell>
                     <TableCell numeric padding="dense">
-                      {n.amount}
+                      {transaction.amount}
                     </TableCell>
                     <TableCell padding="dense">
                       <Time
@@ -267,13 +276,13 @@ class EnhancedTable extends React.Component {
                         titleFormat="MM/DD/YY hh:mm"
                         relative={
                           new Date().toDateString() ===
-                          new Date(n.time).toDateString()
+                          new Date(transaction.time).toDateString()
                         }
-                        value={n.time}
+                        value={transaction.time}
                       />
                     </TableCell>
                     <TableCell padding="dense">
-                      <$DeleteButton id={n.id} />
+                      <$DeleteButton id={transaction.id} />
                     </TableCell>
                   </TableRow>
                 )

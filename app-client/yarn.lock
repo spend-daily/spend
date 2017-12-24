@@ -1165,10 +1165,6 @@ braces@^1.8.2:
     preserve "^0.2.0"
     repeat-element "^1.1.2"
 
-brcast@^2.0.0:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/brcast/-/brcast-2.0.2.tgz#2db16de44140e418dc37fab10beec0369e78dcef"
-
 brcast@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/brcast/-/brcast-3.0.1.tgz#6256a8349b20de9eed44257a9b24d71493cd48dd"
@@ -1648,7 +1644,11 @@ core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
-core-js@^2.4.0, core-js@^2.5.0:
+core-js@^2.4.0:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.3.tgz#8acc38345824f16d8365b7c9b4259168e8ed603e"
+
+core-js@^2.5.0:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.1.tgz#ae6874dc66937789b80754ff5428df66819ca50b"
 
@@ -2051,8 +2051,8 @@ dom-converter@~0.1:
     utila "~0.3"
 
 dom-helpers@^3.2.0, dom-helpers@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.2.1.tgz#3203e07fed217bd1f424b019735582fc37b2825a"
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.3.1.tgz#fc1a4e15ffdf60ddde03a480a9c0fece821dd4a6"
 
 dom-serializer@0, dom-serializer@~0.1.0:
   version "0.1.0"
@@ -3132,10 +3132,6 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoist-non-react-statics@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
-
 hoist-non-react-statics@^2.2.0, hoist-non-react-statics@^2.3.0, hoist-non-react-statics@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.3.1.tgz#343db84c6018c650778898240135a1420ee22ce0"
@@ -3471,7 +3467,7 @@ is-glob@^3.1.0:
   dependencies:
     is-extglob "^2.1.0"
 
-is-in-browser@^1.0.2:
+is-in-browser@^1.0.2, is-in-browser@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/is-in-browser/-/is-in-browser-1.1.3.tgz#56ff4db683a078c6082eb95dad7dc62e1d04f835"
 
@@ -4023,69 +4019,77 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-jss-camel-case@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/jss-camel-case/-/jss-camel-case-5.0.0.tgz#886c1fe56a8a11577454d6a8b4133caa6c1f53a0"
-
-jss-compose@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/jss-compose/-/jss-compose-4.0.0.tgz#f0109e8e8301a2678279301c24523dbc76115b9b"
-  dependencies:
-    warning "^3.0.0"
-
-jss-default-unit@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/jss-default-unit/-/jss-default-unit-7.0.0.tgz#176c1db91da870e3ad16301f6f4b4cfc6fe1e90a"
-
-jss-expand@^4.0.0:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/jss-expand/-/jss-expand-4.0.1.tgz#e8c50e0ac42e7feb6dcaf01212f6607193c1ae80"
-
-jss-extend@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/jss-extend/-/jss-extend-5.0.0.tgz#08a1d4015d05dfe011e3a281457d471226865387"
-  dependencies:
-    warning "^3.0.0"
-
-jss-global@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/jss-global/-/jss-global-2.0.0.tgz#a162f822f17e5d760151d908bdb41d7f2824c28f"
-
-jss-nested@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/jss-nested/-/jss-nested-5.0.0.tgz#c0752f31f2d465110d7de6ac83583dbed669faa0"
-  dependencies:
-    warning "^3.0.0"
-
-jss-preset-default@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/jss-preset-default/-/jss-preset-default-3.0.0.tgz#e43ee1ac526f689baf2bfd28ae95a6fdc3a02663"
-  dependencies:
-    jss-camel-case "^5.0.0"
-    jss-compose "^4.0.0"
-    jss-default-unit "^7.0.0"
-    jss-expand "^4.0.0"
-    jss-extend "^5.0.0"
-    jss-global "^2.0.0"
-    jss-nested "^5.0.0"
-    jss-props-sort "^5.0.0"
-    jss-vendor-prefixer "^6.0.0"
-
-jss-props-sort@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/jss-props-sort/-/jss-props-sort-5.0.0.tgz#8839c88433f64e8c1dab1a7068796f19b84f9195"
-
-jss-vendor-prefixer@^6.0.0:
+jss-camel-case@^6.0.0:
   version "6.0.0"
-  resolved "https://registry.yarnpkg.com/jss-vendor-prefixer/-/jss-vendor-prefixer-6.0.0.tgz#be58124f0cbed76e98cc8eb5219dbb260f057d0b"
+  resolved "https://registry.yarnpkg.com/jss-camel-case/-/jss-camel-case-6.0.0.tgz#7cf8453e395c31fed931d11efbc885edcd61132e"
+
+jss-compose@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/jss-compose/-/jss-compose-5.0.0.tgz#ce01b2e4521d65c37ea42cf49116e5f7ab596484"
+  dependencies:
+    warning "^3.0.0"
+
+jss-default-unit@^8.0.0:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/jss-default-unit/-/jss-default-unit-8.0.2.tgz#cc1e889bae4c0b9419327b314ab1c8e2826890e6"
+
+jss-expand@^5.0.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/jss-expand/-/jss-expand-5.1.0.tgz#b1ad74ec18631f34f65a2124fcfceb6400610e3d"
+
+jss-extend@^6.0.1:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/jss-extend/-/jss-extend-6.1.0.tgz#85f3d39944018e8f44b322c14fa316068aa7bb0b"
+  dependencies:
+    warning "^3.0.0"
+
+jss-global@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/jss-global/-/jss-global-3.0.0.tgz#e19e5c91ab2b96353c227e30aa2cbd938cdaafa2"
+
+jss-nested@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/jss-nested/-/jss-nested-6.0.1.tgz#ef992b79d6e8f63d939c4397b9d99b5cbbe824ca"
+  dependencies:
+    warning "^3.0.0"
+
+jss-preset-default@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/jss-preset-default/-/jss-preset-default-4.0.1.tgz#822cecb87c27ff91633774422f4c221d61486b65"
+  dependencies:
+    jss-camel-case "^6.0.0"
+    jss-compose "^5.0.0"
+    jss-default-unit "^8.0.0"
+    jss-expand "^5.0.0"
+    jss-extend "^6.0.1"
+    jss-global "^3.0.0"
+    jss-nested "^6.0.1"
+    jss-props-sort "^6.0.0"
+    jss-template "^1.0.0"
+    jss-vendor-prefixer "^7.0.0"
+
+jss-props-sort@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/jss-props-sort/-/jss-props-sort-6.0.0.tgz#9105101a3b5071fab61e2d85ea74cc22e9b16323"
+
+jss-template@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/jss-template/-/jss-template-1.0.0.tgz#4b874608706ddceecacdb5567e254aecb6ea69b3"
+  dependencies:
+    warning "^3.0.0"
+
+jss-vendor-prefixer@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/jss-vendor-prefixer/-/jss-vendor-prefixer-7.0.0.tgz#0166729650015ef19d9f02437c73667231605c71"
   dependencies:
     css-vendor "^0.3.8"
 
-jss@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/jss/-/jss-8.1.0.tgz#b32f15efcce22446dfda4c2be09a04f38431da0a"
+jss@^9.3.2, jss@^9.3.3:
+  version "9.4.0"
+  resolved "https://registry.yarnpkg.com/jss/-/jss-9.4.0.tgz#fbfd1a63556c5afd5bfcffd98df3c50eb2614ed3"
   dependencies:
-    is-in-browser "^1.0.2"
+    is-in-browser "^1.1.3"
+    symbol-observable "^1.1.0"
     warning "^3.0.0"
 
 jsx-ast-utils@^1.4.0, jsx-ast-utils@^1.4.1:
@@ -4315,9 +4319,9 @@ material-ui-pickers@^1.0.0-beta.3:
     babel-helpers "^6.24.1"
     moment-range "^3.0.3"
 
-material-ui@next:
-  version "1.0.0-beta.20"
-  resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-1.0.0-beta.20.tgz#b8d9a79f88056cd1226f0b8bd36adfaf9a8d330f"
+material-ui@^1.0.0-beta.25:
+  version "1.0.0-beta.25"
+  resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-1.0.0-beta.25.tgz#9d5bf97cebc553a5bca28e490823943d9ffb0ebc"
   dependencies:
     babel-runtime "^6.26.0"
     brcast "^3.0.1"
@@ -4325,15 +4329,14 @@ material-ui@next:
     deepmerge "^2.0.1"
     dom-helpers "^3.2.1"
     hoist-non-react-statics "^2.3.1"
-    jss "^8.1.0"
-    jss-preset-default "^3.0.0"
+    jss "^9.3.3"
+    jss-preset-default "^4.0.1"
     keycode "^2.1.9"
     lodash "^4.17.4"
     normalize-scroll-left "^0.1.2"
     prop-types "^15.6.0"
     react-event-listener "^0.5.1"
-    react-flow-types "0.2.0-beta.3"
-    react-jss "^7.2.0"
+    react-jss "^8.1.0"
     react-popper "^0.7.4"
     react-scrollbar-size "^2.0.2"
     react-transition-group "^2.2.1"
@@ -5035,8 +5038,8 @@ pluralize@^4.0.0:
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-4.0.0.tgz#59b708c1c0190a2f692f1c7618c446b052fd1762"
 
 popper.js@^1.12.5:
-  version "1.12.6"
-  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.12.6.tgz#91e12a97b07815258b76915d64044e8ac053d426"
+  version "1.12.9"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.12.9.tgz#0dfbc2dff96c451bb332edcfcfaaf566d331d5b3"
 
 portfinder@^1.0.9:
   version "1.0.13"
@@ -5589,27 +5592,23 @@ react-error-overlay@^3.0.0:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
 
 react-event-listener@^0.5.0, react-event-listener@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/react-event-listener/-/react-event-listener-0.5.1.tgz#ba36076e47bc37c5a67ff5ccd4a9ff0f15621040"
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/react-event-listener/-/react-event-listener-0.5.2.tgz#8fe116f8930a4c7fe363c631f56963d7e4ed3d66"
   dependencies:
     babel-runtime "^6.26.0"
     fbjs "^0.8.16"
     prop-types "^15.6.0"
     warning "^3.0.0"
 
-react-flow-types@0.2.0-beta.3:
-  version "0.2.0-beta.3"
-  resolved "https://registry.yarnpkg.com/react-flow-types/-/react-flow-types-0.2.0-beta.3.tgz#93e7e3c95a75a1a941de05b9d7287e3ca6871046"
-
-react-jss@^7.2.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/react-jss/-/react-jss-7.2.0.tgz#30a5ed51d8388a33767c6d19790b222c1f33f48f"
+react-jss@^8.1.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/react-jss/-/react-jss-8.2.0.tgz#8440f08aef27d408ba31f63df09167ed22a5b99b"
   dependencies:
-    hoist-non-react-statics "^1.2.0"
-    jss "^8.1.0"
-    jss-preset-default "^3.0.0"
-    prop-types "^15.5.8"
-    theming "^1.1.0"
+    hoist-non-react-statics "^2.3.1"
+    jss "^9.3.2"
+    jss-preset-default "^4.0.1"
+    prop-types "^15.6.0"
+    theming "^1.3.0"
 
 react-popper@^0.7.4:
   version "0.7.4"
@@ -5713,7 +5712,7 @@ react-transition-group@^2.2.1:
     prop-types "^15.5.8"
     warning "^3.0.0"
 
-react@^15.5.4, react@^15.6.2:
+react@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.2.tgz#dba0434ab439cfe82f108f0f511663908179aa72"
   dependencies:
@@ -5831,8 +5830,8 @@ regenerate@^1.2.1:
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.3.3.tgz#0c336d3980553d755c39b586ae3b20aa49c82b7f"
 
 regenerator-runtime@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.0.tgz#7e54fe5b5ccd5d6624ea6255c3473be090b802e1"
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
 
 regenerator-transform@^0.10.0:
   version "0.10.1"
@@ -6484,9 +6483,13 @@ sw-toolbox@^3.4.0:
     path-to-regexp "^1.0.1"
     serviceworker-cache-polyfill "^4.0.0"
 
-symbol-observable@^1.0.2, symbol-observable@^1.0.4:
+symbol-observable@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.4.tgz#29bf615d4aa7121bdd898b22d4b3f9bc4e2aa03d"
+
+symbol-observable@^1.0.4, symbol-observable@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.1.0.tgz#5c68fd8d54115d9dfb72a84720549222e8db9b32"
 
 symbol-tree@^3.2.1:
   version "3.2.2"
@@ -6542,15 +6545,14 @@ text-table@0.2.0, text-table@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
 
-theming@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/theming/-/theming-1.1.0.tgz#0562760b55a1b919c2d5eeb94130351f8958e13a"
+theming@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/theming/-/theming-1.3.0.tgz#286d5bae80be890d0adc645e5ca0498723725bdc"
   dependencies:
-    brcast "^2.0.0"
+    brcast "^3.0.1"
     is-function "^1.0.1"
     is-plain-object "^2.0.1"
     prop-types "^15.5.8"
-    react "^15.5.4"
 
 throat@^3.0.0:
   version "3.2.0"

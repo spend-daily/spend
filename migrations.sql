@@ -20,14 +20,34 @@ CREATE TABLE spend.transactions (
     PRIMARY KEY ("id")
 );
 
+CREATE TABLE spend.tags {
+    "id" uuid,
+    "user_id" uuid,
+    "label" text NOT NULL,
+    PRIMARY KEY ("id")
+};
+
+CREATE TABLE spend.transaction_tags {
+    "transaction_id"
+        uuid
+        NOT NULL
+        REFERENCES spend.transactions("id")
+        ON DELETE CASCADE,
+    "tag_id"
+        uuid
+        NOT NULL
+        REFERENCES spend.tags("id")
+        ON DELETE CASCADE,
+    PRIMARY KEY ("tansaction_id", "tag_id")
+};
+
 -- views
 CREATE OR REPLACE VIEW transaction_list AS
 	SELECT
 		time::date as "day",
 		*
 	FROM transactions;
-	
-	
+
 CREATE OR REPLACE VIEW transaction_days AS
 	SELECT
 		date_part('year', time) "year",
@@ -42,7 +62,7 @@ CREATE OR REPLACE VIEW transaction_days AS
 		"year",
 		"month",
 		"day";
-	
+
 CREATE OR REPLACE VIEW transaction_months AS
 	SELECT
 		date_part('year', time) "year",
@@ -55,7 +75,7 @@ CREATE OR REPLACE VIEW transaction_months AS
 		"user_id",
 		"year",
 		"month";
-	
+
 CREATE OR REPLACE VIEW transaction_years AS
 	SELECT
 		date_part('year', time) "year",
@@ -66,8 +86,8 @@ CREATE OR REPLACE VIEW transaction_years AS
 	GROUP BY
 		"user_id",
 		"year";
-	
--- application roles	
+
+-- application roles
 create role spender;
 grant all on schema spend to spender;
 grant all on all tables in schema spend to spender;
