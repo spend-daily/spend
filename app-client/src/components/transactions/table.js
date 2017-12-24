@@ -21,7 +21,6 @@ import DeleteIcon from 'material-ui-icons/Delete'
 import FilterListIcon from 'material-ui-icons/FilterList'
 import AccessTime from 'material-ui-icons/AccessTime'
 import AttachMoney from 'material-ui-icons/AttachMoney'
-import Label from 'material-ui-icons/Label'
 import Time from 'react-time'
 
 import Tags from '../tags'
@@ -38,7 +37,7 @@ const columnData = [
   },
   {
     id: 'tags',
-    label: <Label />
+    label: 'Tags'
   },
   {
     id: 'amount',

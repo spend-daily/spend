@@ -19,7 +19,11 @@ class TagAutocomplete extends React.Component {
   }
 
   onUpdateNewTag = event => {
-    this.setState({ newTag: event.target.value })
+    const newValue = event.target.value
+    this.setState({
+      newTag: newValue,
+      showTags: !!newValue.length
+    })
   }
 
   onKeyUp = async event => {
@@ -34,8 +38,10 @@ class TagAutocomplete extends React.Component {
           }
         }
       })
-      console.log(tag)
-      this.setState({ newTag: '' })
+      this.setState({
+        newTag: '',
+        showTags: false
+      })
     }
   }
 
@@ -50,8 +56,19 @@ class TagAutocomplete extends React.Component {
         }
       }
     })
-    console.log(tag)
     this.setState({ newTag: '' })
+  }
+
+  onBlur = () => {
+    this.setState({
+      showTags: false
+    })
+  }
+
+  onFocus = () => {
+    this.setState({
+      showTags: !!this.state.newTag.length
+    })
   }
 
   render() {
@@ -64,10 +81,12 @@ class TagAutocomplete extends React.Component {
           id="new-tag"
           label="New Tag"
           value={this.state.newTag}
+          onBlur={this.onBlur}
           onChange={this.onUpdateNewTag}
           onKeyUp={this.onKeyUp}
+          onFocus={this.onFocus}
         />
-        {this.state.newTag && (
+        {this.state.showTags && (
           <ul style={styles.listStyle}>
             {visibleTags.map(tag => (
               <MenuItem
