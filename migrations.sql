@@ -93,6 +93,8 @@ grant all on schema spend to spender;
 grant all on all tables in schema spend to spender;
 
 -- row level security
+
+--- transactions
 alter table spend.transactions enable row level security;
 
 create policy transaction_owner
@@ -115,3 +117,27 @@ $associate_transaction_with_user$ LANGUAGE plpgsql;
 CREATE TRIGGER associate_transaction_with_user_trigger
 BEFORE INSERT ON spend.transactions
 FOR EACH ROW EXECUTE PROCEDURE associate_transaction_with_user();
+
+--- tags
+alter table spend.tags enable row level security;
+
+create policy tag_owner
+on spend.tags
+	for all
+	to spender
+	using (
+		current_user = tags.user_id::text
+	)
+	with check (true);
+
+CREATE OR REPLACE FUNCTION associate_tag_with_user()
+RETURNS trigger AS $associate_tag_with_user$
+BEGIN
+    NEW.user_id := current_user;
+    RETURN NEW;
+END;
+$associate_tag_with_user$ LANGUAGE plpgsql;
+
+CREATE TRIGGER associate_tag_with_user_trigger
+BEFORE INSERT ON spend.tags
+FOR EACH ROW EXECUTE PROCEDURE associate_tag_with_user();
