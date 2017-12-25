@@ -26,27 +26,8 @@ class TagAutocomplete extends React.Component {
     })
   }
 
-  onKeyUp = async event => {
-    if (event.keyCode === 13) {
-      await this.props.createTag({
-        variables: {
-          tag: {
-            tag: {
-              id: uuid(),
-              label: this.state.newTag
-            }
-          }
-        }
-      })
-      this.setState({
-        newTag: '',
-        showTags: false
-      })
-    }
-  }
-
-  onClick = async tagId => {
-    await this.props.createTransactionTag({
+  async tagTransaction(tagId) {
+    return await this.props.createTransactionTag({
       variables: {
         transactionTag: {
           transactionTag: {
@@ -56,7 +37,35 @@ class TagAutocomplete extends React.Component {
         }
       }
     })
-    this.setState({ newTag: '' })
+  }
+
+  onKeyUp = async event => {
+    if (event.keyCode === 13) {
+      const tagId = uuid()
+      await this.props.createTag({
+        variables: {
+          tag: {
+            tag: {
+              id: tagId,
+              label: this.state.newTag
+            }
+          }
+        }
+      })
+      await this.tagTransaction(tagId)
+      this.setState({
+        newTag: '',
+        showTags: false
+      })
+    }
+  }
+
+  onClick = tagId => async () => {
+    await this.tagTransaction(tagId)
+    this.setState({
+      newTag: '',
+      showTags: false
+    })
   }
 
   onBlur = () => {
@@ -92,7 +101,7 @@ class TagAutocomplete extends React.Component {
               <MenuItem
                 key={tag.id}
                 component="li"
-                onClick={this.onClick.bind(this, tag.id)}
+                onMouseDown={this.onClick(tag.id)}
               >
                 {tag.label}
               </MenuItem>
