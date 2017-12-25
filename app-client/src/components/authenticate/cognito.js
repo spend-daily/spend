@@ -55,6 +55,17 @@ export async function login({ name, password }) {
 
 export async function refresh() {
   return new Promise((resolve, reject) => {
-    resolve()
+    const cognitoUser = userPool.getCurrentUser()
+
+    if (cognitoUser != null) {
+      cognitoUser.getSession(function(error, session) {
+        if (error) {
+          console.log(error)
+          reject(error)
+        } else {
+          resolve(session)
+        }
+      })
+    }
   })
 }
