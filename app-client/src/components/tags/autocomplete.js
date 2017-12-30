@@ -57,15 +57,20 @@ class TagAutocomplete extends React.Component {
         newTag: '',
         showTags: false
       })
+
+      this.props.refetchTransactions()
     }
   }
 
   onClick = tagId => async () => {
     await this.tagTransaction(tagId)
+
     this.setState({
       newTag: '',
       showTags: false
     })
+
+    this.props.refetchTransactions()
   }
 
   onBlur = () => {

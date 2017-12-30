@@ -1,7 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
-import { findIndex } from 'lodash'
 import { graphql } from 'react-apollo'
 import { withStyles } from 'material-ui/styles'
 import Table, {
@@ -23,7 +22,7 @@ import AttachMoney from 'material-ui-icons/AttachMoney'
 import Time from 'react-time'
 
 import Tags from '../tags'
-import { allTransactions, deleteTransaction } from './queries'
+import { deleteTransaction } from './queries'
 
 const columnData = [
   {
@@ -152,36 +151,24 @@ class DeleteButton extends React.Component {
     isDeleting: false
   }
 
-  handleDelete = id => {
+  handleDelete = async id => {
     this.setState({
       isDeleting: true
     })
 
-    this.props.mutate({
+    await this.props.mutate({
       variables: {
         transaction: {
           id
         }
-      },
-      update: proxy => {
-        const data = proxy.readQuery({ query: allTransactions })
-        const transactionIndex = findIndex(
-          data.allTransactions.edges,
-          transaction => transaction.node.id === id
-        )
-
-        if (transactionIndex) {
-          data.allTransactions.edges.splice(transactionIndex, 1)
-          proxy.writeQuery({ query: allTransactions, data })
-        } else {
-          console.info(`Could not optimistically remove transaction ${id}`)
-        }
-
-        this.setState({
-          isDeleting: false
-        })
       }
     })
+
+    this.setState({
+      isDeleting: false
+    })
+
+    await this.props.refetch()
   }
 
   render() {
@@ -263,7 +250,11 @@ class EnhancedTable extends React.Component {
                     </TableCell>
                     <TableCell>{transaction.memo}</TableCell>
                     <TableCell padding="dense">
-                      <Tags transactionId={transaction.id} />
+                      <Tags
+                        refetchTransactions={this.props.refetch}
+                        tags={transaction.tags}
+                        transactionId={transaction.id}
+                      />
                     </TableCell>
                     <TableCell numeric padding="dense">
                       {transaction.amount}

@@ -3,7 +3,7 @@ import { compose, graphql } from 'react-apollo'
 import { Chip, withStyles } from 'material-ui'
 
 import TagAutocomplete from './autocomplete'
-import { deleteTransactionTag, transactionTags } from './queries'
+import { deleteTransactionTag } from './queries'
 
 const styles = theme => ({
   tagList: {
@@ -21,8 +21,8 @@ const styles = theme => ({
 })
 
 class Tags extends React.Component {
-  onDeleteTag = tagId => () => {
-    this.props.deleteTransactionTag({
+  onDeleteTag = tagId => async () => {
+    await this.props.deleteTransactionTag({
       variables: {
         transactionTag: {
           tagId: tagId,
@@ -30,18 +30,23 @@ class Tags extends React.Component {
         }
       }
     })
+
+    this.props.refetchTransactions()
   }
 
   render() {
     return (
       <ul className={this.props.classes.tagList}>
-        {this.props.data.map(tag => (
+        {this.props.tags.map(tag => (
           <li className={this.props.classes.tag} key={tag.id}>
             <Chip label={tag.label} onDelete={this.onDeleteTag(tag.id)} />
           </li>
         ))}
         <li className={this.props.classes.tagInput}>
-          <TagAutocomplete transactionId={this.props.transactionId} />
+          <TagAutocomplete
+            refetchTransactions={this.props.refetchTransactions}
+            transactionId={this.props.transactionId}
+          />
         </li>
       </ul>
     )
@@ -50,15 +55,6 @@ class Tags extends React.Component {
 
 export default compose(
   withStyles(styles),
-  graphql(transactionTags, {
-    options: props => ({
-      variables: {
-        conditions: {
-          transactionId: props.transactionId
-        }
-      }
-    })
-  }),
   graphql(deleteTransactionTag, {
     name: 'deleteTransactionTag',
     options: props => ({
@@ -69,8 +65,4 @@ export default compose(
       }
     })
   })
-)(props => {
-  if (props.data.loading) return null
-  const data = props.data.allTransactionTags.edges.map(edge => edge.node.tag)
-  return <Tags {...props} data={data} />
-})
+)(Tags)

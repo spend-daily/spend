@@ -24,6 +24,7 @@ export const transactionList = gql`
           amount
           memo
           time
+          tags
         }
       }
     }

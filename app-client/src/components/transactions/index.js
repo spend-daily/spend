@@ -12,6 +12,7 @@ export const $AllTransactionList = graphql(allTransactions)(({ data }) => {
 })
 
 export const $TransactionList = graphql(transactionList, {
+  name: 'transactionList',
   options: ({ match: { params: { year, month, day } } }) => ({
     variables: {
       condition: {
@@ -19,10 +20,14 @@ export const $TransactionList = graphql(transactionList, {
       }
     }
   })
-})(({ data }) => {
-  if (data.loading || !data.allTransactionLists) return null
-  const transactions = data.allTransactionLists.edges.map(edge => edge.node)
-  return <Table data={transactions} />
+})(({ transactionList }) => {
+  if (transactionList.loading || !transactionList.allTransactionLists)
+    return null
+  const transactions = transactionList.allTransactionLists.edges.map(edge => ({
+    ...edge.node,
+    tags: JSON.parse(edge.node.tags)
+  }))
+  return <Table data={transactions} refetch={transactionList.refetch} />
 })
 
 export const $TransactionMonth = graphql(transactionDays, {
