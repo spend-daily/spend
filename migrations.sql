@@ -42,11 +42,14 @@ CREATE TABLE spend.transaction_tags {
 };
 
 -- views
-CREATE OR REPLACE VIEW transaction_list AS
-	SELECT
-		time::date as "day",
-		*
-	FROM transactions;
+CREATE OR REPLACE VIEW spend.transaction_list AS
+ SELECT transactions."time"::date AS day,
+    transactions.*,
+    COALESCE(json_agg(tags) FILTER (WHERE tags.id IS NOT NULL), '[]')::json AS tags
+   FROM spend.transactions
+     LEFT JOIN spend.transaction_tags ON transaction_tags.transaction_id = transactions.id
+     LEFT JOIN spend.tags ON transaction_tags.tag_id = tags.id
+  GROUP BY transactions.id;
 
 CREATE OR REPLACE VIEW transaction_days AS
 	SELECT
