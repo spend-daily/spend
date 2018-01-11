@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Card, { CardActions, CardContent } from 'material-ui/Card'
 import { withStyles } from 'material-ui/styles'
 import { find } from 'lodash'
 
@@ -38,7 +39,8 @@ const styles = {
   },
   day: {
     flex: '1 0',
-    border: '1px solid black'
+    margin: '2px',
+    padding: '4px'
   }
 }
 
@@ -57,26 +59,28 @@ const dayStyles = {
   }
 }
 
-const Day = ({ classes, dayOfMonth, transaction }) => {
-  if (transaction) {
-    return (
-      <Link
-        className={classes.day}
-        to={`/home/${transaction.year}/${transaction.month}/${transaction.day}`}
-      >
-        <div className={classes.label}>{dayOfMonth}</div>
-        <div className={classes.sum}>${transaction.sum}</div>
-        <div className={classes.count}>
-          {transaction.count} transaction{transaction.count > 1 ? 's' : ''}
-        </div>
-      </Link>
-    )
-  }
-
+const Day = ({ classes, dayOfMonth, transaction, date }) => {
   return (
-    <div>
-      <div className={classes.label}>{dayOfMonth}</div>
-    </div>
+    <Link
+      className={classes.day}
+      to={`/home/${date.year}/${date.month}/${date.day}`}
+    >
+      <Card style={{ height: '100%' }}>
+        <CardContent>
+          {transaction ? (
+            <div>
+              <div className={classes.label}>{dayOfMonth}</div>
+              <div className={classes.sum}>${transaction.sum}</div>
+              <div className={classes.count}>
+                {transaction.count} transaction{transaction.count > 1 ? 's' : ''}
+              </div>
+            </div>
+          ) : (
+            <div className={classes.label}>{dayOfMonth}</div>
+          )}
+        </CardContent>
+      </Card>
+    </Link>
   )
 }
 
@@ -114,6 +118,7 @@ class Month extends React.Component {
                     <$Day
                       dayOfMonth={counter++}
                       transaction={find(data, { day: counter - 1 })}
+                      date={{ day: counter - 1, month, year }}
                     />
                   ) : null}
                 </div>

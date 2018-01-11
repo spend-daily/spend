@@ -37,7 +37,7 @@ class Tags extends React.Component {
   render() {
     return (
       <ul className={this.props.classes.tagList}>
-        {this.props.tags.map(tag => (
+        {(this.props.tags || []).map(tag => (
           <li className={this.props.classes.tag} key={tag.id}>
             <Chip label={tag.label} onDelete={this.onDeleteTag(tag.id)} />
           </li>
