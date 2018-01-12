@@ -1,21 +1,27 @@
 import React from 'react'
 import { TextField } from 'material-ui'
 import { MenuItem } from 'material-ui/Menu'
+import Paper from 'material-ui/Paper'
+import { withStyles } from 'material-ui/styles'
 import { compose, graphql } from 'react-apollo'
 import uuid from 'uuid/v4'
 
 import { allTags, createTag, createTransactionTag } from './queries'
 
 const styles = {
-  listStyle: {
-    padding: '0 10px',
+  listContainer: {
     position: 'absolute'
+  },
+  listStyle: {
+    padding: '0',
+    listStyle: 'none'
   }
 }
 
 class TagAutocomplete extends React.Component {
   state = {
-    newTag: ''
+    newTag: '',
+    openOverride: false
   }
 
   onUpdateNewTag = event => {
@@ -86,6 +92,7 @@ class TagAutocomplete extends React.Component {
   }
 
   render() {
+    const { classes } = this.props
     const visibleTags = this.props.data.filter(
       tag => ~tag.label.toLowerCase().indexOf(this.state.newTag.toLowerCase())
     )
@@ -100,18 +107,20 @@ class TagAutocomplete extends React.Component {
           onKeyUp={this.onKeyUp}
           onFocus={this.onFocus}
         />
-        {this.state.showTags && (
-          <ul style={styles.listStyle}>
-            {visibleTags.map(tag => (
-              <MenuItem
-                key={tag.id}
-                component="li"
-                onMouseDown={this.onClick(tag.id)}
-              >
-                {tag.label}
-              </MenuItem>
-            ))}
-          </ul>
+        {(this.state.showTags || this.state.openOverride) && (
+          <Paper elevation={8} className={classes.listContainer}>
+            <ul style={styles.listStyle}>
+              {visibleTags.map(tag => (
+                <MenuItem
+                  key={tag.id}
+                  component="li"
+                  onMouseDown={this.onClick(tag.id)}
+                >
+                  {tag.label}
+                </MenuItem>
+              ))}
+            </ul>
+          </Paper>
         )}
       </div>
     )
@@ -145,7 +154,8 @@ export default compose(
         }
       }
     })
-  })
+  }),
+  withStyles(styles)
 )(props => {
   if (props.allTags.loading) return null
   const data = props.allTags.allTags.edges.map(edge => edge.node)

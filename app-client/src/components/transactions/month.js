@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Card, { CardActions, CardContent } from 'material-ui/Card'
+import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
 import { find } from 'lodash'
 
@@ -14,7 +15,7 @@ const days = [
   'saturday'
 ]
 
-const styles = {
+const styles = theme => ({
   monthContainer: {
     display: 'flex',
     flexFlow: 'column nowrap',
@@ -25,7 +26,10 @@ const styles = {
     flexFlow: 'row nowrap'
   },
   dayName: {
-    flex: '1 0'
+    flex: '1 0',
+    color: theme.palette.text.secondary,
+    padding: `.5vw 0 0`,
+    fontSize: '2vw'
   },
   month: {
     display: 'flex',
@@ -40,24 +44,31 @@ const styles = {
   day: {
     flex: '1 0',
     margin: '2px',
-    padding: '4px'
+    width: `${100 / 7}%`
   }
-}
+})
 
-const dayStyles = {
+const dayStyles = theme => ({
   day: {
     textDecoration: 'none'
   },
   label: {
-    textAlign: 'left'
+    textAlign: 'left',
+    color: theme.palette.text.secondary
   },
   sum: {
-    fontSize: '2em'
+    fontSize: '1.4em'
   },
   count: {
-    fontSize: '1.1em'
+    fontSize: '.9em'
+  },
+  dayContent: {
+    overflow: 'auto'
+  },
+  dayContainer: {
+    padding: `${theme.spacing.unit}px`
   }
-}
+})
 
 const Day = ({ classes, dayOfMonth, transaction, date }) => {
   return (
@@ -66,17 +77,25 @@ const Day = ({ classes, dayOfMonth, transaction, date }) => {
       to={`/home/${date.year}/${date.month}/${date.day}`}
     >
       <Card style={{ height: '100%' }}>
-        <CardContent>
-          {transaction ? (
-            <div>
-              <div className={classes.label}>{dayOfMonth}</div>
-              <div className={classes.sum}>${transaction.sum}</div>
-              <div className={classes.count}>
+        <CardContent className={classes.dayContainer}>
+          <Typography className={classes.label}>{dayOfMonth}</Typography>
+          {transaction && (
+            <div className={classes.dayContent}>
+              <Typography
+                className={classes.sum}
+                component="h3"
+                type="headline"
+              >
+                ${transaction.sum}
+              </Typography>
+              <Typography
+                className={classes.count}
+                component="h4"
+                type="headline"
+              >
                 {transaction.count} transaction{transaction.count > 1 ? 's' : ''}
-              </div>
+              </Typography>
             </div>
-          ) : (
-            <div className={classes.label}>{dayOfMonth}</div>
           )}
         </CardContent>
       </Card>
