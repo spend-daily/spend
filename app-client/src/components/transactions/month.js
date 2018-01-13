@@ -5,6 +5,9 @@ import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
 import { find } from 'lodash'
 
+import Count from './count'
+import Sum from './sum'
+
 const days = [
   'sunday',
   'monday',
@@ -53,12 +56,6 @@ const dayStyles = theme => ({
     textAlign: 'left',
     color: theme.palette.text.secondary
   },
-  sum: {
-    fontSize: '1.4em'
-  },
-  count: {
-    fontSize: '.9em'
-  },
   dayContent: {
     overflow: 'auto'
   },
@@ -77,16 +74,8 @@ const Day = ({ classes, dayOfMonth, transaction, date }) => (
         <Typography className={classes.label}>{dayOfMonth}</Typography>
         {transaction && (
           <div className={classes.dayContent}>
-            <Typography className={classes.sum} component="h3" type="headline">
-              ${transaction.sum}
-            </Typography>
-            <Typography
-              className={classes.count}
-              component="h4"
-              type="headline"
-            >
-              {transaction.count} transaction{transaction.count > 1 ? 's' : ''}
-            </Typography>
+            <Sum sum={transaction.sum} />
+            <Count count={transaction.count} />
           </div>
         )}
       </CardContent>

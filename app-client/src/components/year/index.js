@@ -5,6 +5,9 @@ import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
 import { find } from 'lodash'
 
+import Count from '../transactions/count'
+import Sum from '../transactions/sum'
+
 const months = [
   'january',
   'february',
@@ -39,13 +42,19 @@ const Month = withStyles(theme => ({
   monthName: {
     color: theme.palette.text.secondary
   }
-}))(({ classes, year, month }) => (
+}))(({ classes, year, month, data }) => (
   <Link to={`/home/${year}/${month}`} className={classes.month}>
     <Card key={month} className={classes.monthCard}>
       <CardContent>
         <Typography className={classes.monthName} component="h3">
           {months[month - 1]}
         </Typography>
+        {data && (
+          <div>
+            <Sum sum={data.count} />
+            <Count count={data.count} />
+          </div>
+        )}
       </CardContent>
     </Card>
   </Link>
@@ -53,12 +62,17 @@ const Month = withStyles(theme => ({
 
 class Year extends React.Component {
   render() {
-    const { classes, match } = this.props
+    const { classes, year, data } = this.props
 
     return (
       <div className={classes.year}>
         {months.map((_, index) => (
-          <Month key={index} year={match.params.year} month={index + 1} />
+          <Month
+            key={index}
+            year={year}
+            month={index + 1}
+            data={data[index + 1]}
+          />
         ))}
       </div>
     )

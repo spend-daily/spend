@@ -1,9 +1,16 @@
 import React from 'react'
 import { graphql } from 'react-apollo'
+import { keyBy } from 'lodash'
 
 import Table from './table'
 import Month from './month'
-import { allTransactions, transactionList, transactionDays } from './queries'
+import Year from '../year'
+import {
+  allTransactions,
+  transactionList,
+  transactionDays,
+  transactionMonths
+} from './queries'
 
 export const $AllTransactionList = graphql(allTransactions)(({ data }) => {
   if (data.loading || !data.allTransactions) return null
@@ -43,4 +50,21 @@ export const $TransactionMonth = graphql(transactionDays, {
   if (data.loading || !data.allTransactionDays) return null
   const transactions = data.allTransactionDays.edges.map(edge => edge.node)
   return <Month data={transactions} {...match.params} />
+})
+
+export const $TransactionYear = graphql(transactionMonths, {
+  options: ({ match: { params: { year } } }) => ({
+    variables: {
+      condition: {
+        year
+      }
+    }
+  })
+})(({ data, match }) => {
+  if (data.loading || !data.allTransactionMonths) return null
+  const transactions = keyBy(
+    data.allTransactionMonths.edges.map(edge => edge.node),
+    'month'
+  )
+  return <Year data={transactions} {...match.params} />
 })

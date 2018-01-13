@@ -4,9 +4,9 @@ import { Switch, Route } from 'react-router-dom'
 import {
   $AllTransactionList,
   $TransactionList,
-  $TransactionMonth
+  $TransactionMonth,
+  $TransactionYear
 } from '../transactions'
-import Year from '../year'
 
 export class Home extends Component {
   render() {
@@ -14,7 +14,7 @@ export class Home extends Component {
       <Switch>
         <Route path="/home/:year/:month/:day" component={$TransactionList} />
         <Route path="/home/:year/:month" component={$TransactionMonth} />
-        <Route path="/home/:year" component={Year} />
+        <Route path="/home/:year" component={$TransactionYear} />
         <Route path="/home" component={$AllTransactionList} />
       </Switch>
     )
