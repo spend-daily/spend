@@ -58,7 +58,7 @@ class Year extends React.Component {
     return (
       <div className={classes.year}>
         {months.map((_, index) => (
-          <Month year={match.params.year} month={index + 1} />
+          <Month key={index} year={match.params.year} month={index + 1} />
         ))}
       </div>
     )

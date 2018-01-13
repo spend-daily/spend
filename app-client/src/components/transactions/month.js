@@ -99,7 +99,7 @@ const $Day = withStyles(dayStyles)(Day)
 class Month extends React.Component {
   render() {
     const { classes, data, month, year } = this.props
-    const daysInMonth = new Date(year, month - 1, 0).getDate()
+    const daysInMonth = new Date(year, month, 0).getDate()
     const firstDayOfWeek = new Date(year, month - 1, 1).getDay()
     const weeks = new Array(Math.ceil((daysInMonth + firstDayOfWeek) / 7)).fill(
       null
@@ -124,7 +124,7 @@ class Month extends React.Component {
                   className={classes.day}
                 >
                   {(weekIndex || dayIndex >= firstDayOfWeek) &&
-                  counter < daysInMonth ? (
+                  counter <= daysInMonth ? (
                     <$Day
                       dayOfMonth={counter++}
                       transaction={find(data, { day: counter - 1 })}
