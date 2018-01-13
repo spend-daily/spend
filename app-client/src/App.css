@@ -29,8 +29,8 @@
   font-size: large;
 }
 
-.tweet {
-  text-align: left;
+a {
+  text-decoration: none;
 }
 
 @keyframes App-logo-spin {

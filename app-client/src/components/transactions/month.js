@@ -49,9 +49,6 @@ const styles = theme => ({
 })
 
 const dayStyles = theme => ({
-  day: {
-    textDecoration: 'none'
-  },
   label: {
     textAlign: 'left',
     color: theme.palette.text.secondary
@@ -70,38 +67,32 @@ const dayStyles = theme => ({
   }
 })
 
-const Day = ({ classes, dayOfMonth, transaction, date }) => {
-  return (
-    <Link
-      className={classes.day}
-      to={`/home/${date.year}/${date.month}/${date.day}`}
-    >
-      <Card style={{ height: '100%' }}>
-        <CardContent className={classes.dayContainer}>
-          <Typography className={classes.label}>{dayOfMonth}</Typography>
-          {transaction && (
-            <div className={classes.dayContent}>
-              <Typography
-                className={classes.sum}
-                component="h3"
-                type="headline"
-              >
-                ${transaction.sum}
-              </Typography>
-              <Typography
-                className={classes.count}
-                component="h4"
-                type="headline"
-              >
-                {transaction.count} transaction{transaction.count > 1 ? 's' : ''}
-              </Typography>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </Link>
-  )
-}
+const Day = ({ classes, dayOfMonth, transaction, date }) => (
+  <Link
+    className={classes.day}
+    to={`/home/${date.year}/${date.month}/${date.day}`}
+  >
+    <Card style={{ height: '100%' }}>
+      <CardContent className={classes.dayContainer}>
+        <Typography className={classes.label}>{dayOfMonth}</Typography>
+        {transaction && (
+          <div className={classes.dayContent}>
+            <Typography className={classes.sum} component="h3" type="headline">
+              ${transaction.sum}
+            </Typography>
+            <Typography
+              className={classes.count}
+              component="h4"
+              type="headline"
+            >
+              {transaction.count} transaction{transaction.count > 1 ? 's' : ''}
+            </Typography>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  </Link>
+)
 
 const $Day = withStyles(dayStyles)(Day)
 
