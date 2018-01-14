@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from 'material-ui'
 import { Link, Route } from 'react-router-dom'
+import { withStyles } from 'material-ui/styles'
 
 const monthMap = [
   'January',
@@ -28,9 +29,15 @@ const Month = props => (
   </Link>
 )
 
-export default props => (
-  <div>
+export default withStyles(theme => ({
+  container: {
+    padding: `0 ${theme.spacing.unit * 2}px`,
+    flex: '1',
+    textAlign: 'left'
+  }
+}))(props => (
+  <div className={props.classes.container}>
     <Route path="/home/:year/:month" component={Year} />
     <Route path="/home/:year/:month/:day" component={Month} />
   </div>
-)
+))
