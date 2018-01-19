@@ -12,7 +12,7 @@ grant all on all tables in schema spend to spend;
 
 -- tables
 CREATE TABLE spend.transactions (
-    "id" uuid,
+    "id" uuid DEFAULT uuid_generate_v4(),
     "user_id" uuid,
     "memo" text,
     "amount" numeric,
@@ -20,14 +20,14 @@ CREATE TABLE spend.transactions (
     PRIMARY KEY ("id")
 );
 
-CREATE TABLE spend.tags {
-    "id" uuid,
+CREATE TABLE spend.tags (
+    "id" uuid DEFAULT uuid_generate_v4(),
     "user_id" uuid,
     "label" text NOT NULL,
     PRIMARY KEY ("id")
-};
+);
 
-CREATE TABLE spend.transaction_tags {
+CREATE TABLE spend.transaction_tags (
     "transaction_id"
         uuid
         NOT NULL
@@ -38,8 +38,30 @@ CREATE TABLE spend.transaction_tags {
         NOT NULL
         REFERENCES spend.tags("id")
         ON DELETE CASCADE,
-    PRIMARY KEY ("tansaction_id", "tag_id")
-};
+    PRIMARY KEY ("transaction_id", "tag_id")
+);
+
+CREATE TYPE interval_unit AS ENUM (
+	'hour',
+	'day',
+	'week',
+	'month',
+	'year'
+);
+
+CREATE TABLE spend.transaction_schedule (
+	"id" uuid DEFAULT uuid_generate_v4(),
+	"transaction_id"
+		uuid
+		NOT NULL
+		REFERENCES spend.transactions("id")
+		ON DELETE CASCADE,
+	"start" date NOT NULL,
+	"end" date,
+	"frequency" numeric NOT NULL,
+	"unit" interval_unit NOT NULL,
+	PRIMARY KEY ("id")
+);
 
 -- views
 CREATE OR REPLACE VIEW spend.transaction_list AS

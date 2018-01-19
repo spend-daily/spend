@@ -57,7 +57,7 @@ class Floaters extends React.Component {
       >
         {this.state.open && (
           <Tooltip title="Recurring" placement="left" enterDelay={300}>
-            <Link to="/home/add-recurring">
+            <Link to="/home/add">
               <Button
                 fab
                 color="primary"
