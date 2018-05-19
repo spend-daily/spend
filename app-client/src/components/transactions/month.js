@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Card, { CardActions, CardContent } from 'material-ui/Card'
+import Card, { CardContent } from 'material-ui/Card'
 import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
 import { find } from 'lodash'

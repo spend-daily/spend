@@ -1,8 +1,7 @@
 import { Button, Card, FormControl, Grid, TextField } from 'material-ui'
 import React, { Component } from 'react'
-import queryString from 'query-string'
 
-import { login, register } from './cognito'
+import auth0 from './auth0'
 import './style.css'
 
 export class Authenticate extends Component {
@@ -59,24 +58,14 @@ export class Authenticate extends Component {
 }
 
 export class HistoryAuthenticate extends Component {
-  state = {}
-
-  buildCredentials() {
-    return {
-      name: queryString.parse(this.props.location.search).name,
-      password: this.state.password
-    }
+  state = {
+    email: '',
+    password: ''
   }
 
   onNameChange = event => {
-    this.props.history.push({
-      search: `?name=${event.target.value}`
-    })
-  }
-
-  clearName() {
-    this.props.history.push({
-      search: ''
+    this.setState({
+      email: event.target.value
     })
   }
 
@@ -87,32 +76,34 @@ export class HistoryAuthenticate extends Component {
   }
 
   onRegister = async event => {
-    try {
-      await register(this.buildCredentials())
-      this.props.history.push({
-        pathname: '/registered',
-        search: ''
-      })
-    } catch (error) {
-      console.error(error)
-    }
+    auth0.signup(
+      {
+        ...this.state,
+        connection: 'Username-Password-Authentication'
+      },
+      (error, data) => {
+        if (error) {
+          console.error(error)
+        } else {
+          console.log(data)
+        }
+      }
+    )
   }
 
-  onLogin = async event => {
-    try {
-      await login(this.buildCredentials())
-      this.props.history.push({
-        pathname: '/home',
-        search: ''
-      })
-    } catch (error) {
-      console.error(error)
-    }
+  onLogin = event => {
+    auth0.popup.loginWithCredentials(
+      {
+        ...this.state,
+        realm: 'Username-Password-Authentication'
+      },
+      (error, result) => {
+        console.log(error, result)
+      }
+    )
   }
 
   render() {
-    const { name } = queryString.parse(this.props.location.search)
-
     return (
       <Grid container alignItems="center" className="app-container">
         <Grid item xs={12}>
@@ -120,7 +111,7 @@ export class HistoryAuthenticate extends Component {
             <Grid item>
               <Authenticate
                 onNameChange={this.onNameChange}
-                name={name}
+                name={this.state.email}
                 onPasswordChange={this.onPasswordChange}
                 password={this.state.password}
                 onRegister={this.onRegister}

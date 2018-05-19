@@ -34,12 +34,14 @@ custom:
     distributionFolder: ../app-client/build
 
 functions:
+  auth:
+    handler: auth.default
+    cors: true
   graphql:
     handler: graphql/index.default
     events:
     - http:
-        authorizer:
-          arn: arn:aws:cognito-idp:us-west-2:181782121001:userpool/us-west-2_1iKeHP5lG
+        authorizer: auth
         cors: true
         method: post
         path: graphql

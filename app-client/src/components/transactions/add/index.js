@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { compose, graphql } from 'react-apollo'
 import { Button, Grid, TextField } from 'material-ui'
-import Input, { InputLabel } from 'material-ui/Input'
-import { MenuItem } from 'material-ui/Menu'
-import Select from 'material-ui/Select'
 import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 import { CircularProgress } from 'material-ui/Progress'
@@ -12,11 +9,11 @@ import Dialog, {
   DialogContent,
   DialogTitle
 } from 'material-ui/Dialog'
-import { FormControlLabel, FormGroup, FormControl } from 'material-ui/Form'
+import { FormControlLabel } from 'material-ui/Form'
 import Switch from 'material-ui/Switch'
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft'
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight'
-import { DatePicker, DateTimePicker } from 'material-ui-pickers'
+import { DateTimePicker } from 'material-ui-pickers'
 import uuid from 'uuid/v4'
 import { createTransaction } from '../queries'
 import Recurring from './recurring'

@@ -16,7 +16,7 @@ CREATE TABLE spend.transactions (
     "user_id" uuid,
     "memo" text,
     "amount" numeric,
-    "time" timestamp with time zone NOT NULL DEFAULT now(),
+    "time" timestamp with time zone DEFAULT now(),
     PRIMARY KEY ("id")
 );
 
@@ -49,7 +49,7 @@ CREATE TYPE interval_unit AS ENUM (
 	'year'
 );
 
-CREATE TABLE spend.transaction_schedule (
+CREATE TABLE spend.transaction_schedules (
 	"id" uuid DEFAULT uuid_generate_v4(),
 	"transaction_id"
 		uuid
@@ -63,53 +63,107 @@ CREATE TABLE spend.transaction_schedule (
 	PRIMARY KEY ("id")
 );
 
+CREATE TABLE spend.transaction_spreads (
+	"id" uuid DEFAULT uuid_generate_v4(),
+	"transaction_id"
+		uuid
+		NOT NULL
+		REFERENCES spend.transactions("id")
+		ON DELETE CASCADE,
+	"count" numeric NOT NULL,
+	"unit" interval_unit NOT NULL,
+	PRIMARY KEY ("id")
+);
+
 -- views
-CREATE OR REPLACE VIEW spend.transaction_list AS
- SELECT transactions."time"::date AS day,
-    transactions.*,
-    COALESCE(json_agg(tags) FILTER (WHERE tags.id IS NOT NULL), '[]')::json AS tags
-   FROM spend.transactions
-     LEFT JOIN spend.transaction_tags ON transaction_tags.transaction_id = transactions.id
-     LEFT JOIN spend.tags ON transaction_tags.tag_id = tags.id
+CREATE OR REPLACE VIEW spend.transaction_and_tags AS
+ SELECT transactions.id,
+    transactions.user_id,
+    transactions.memo,
+    transactions.amount,
+    transactions."time",
+    COALESCE(json_agg(tags.*) FILTER (WHERE tags.id IS NOT NULL), '[]'::json) AS tags
+   FROM transactions
+     LEFT JOIN transaction_tags ON transaction_tags.transaction_id = transactions.id
+     LEFT JOIN tags ON transaction_tags.tag_id = tags.id
   GROUP BY transactions.id;
 
-CREATE OR REPLACE VIEW transaction_days AS
+CREATE OR REPLACE VIEW transaction_and_schedules AS
+	SELECT 
+		transaction_and_tags.id,
+		transaction_and_tags.user_id,
+		transaction_and_tags.memo,
+		transaction_and_tags.amount,
+		transaction_and_tags.time,
+		transaction_and_tags.tags,
+		false AS recurring
+	FROM transaction_and_tags
+	WHERE time is not null
+	UNION ALL
 	SELECT
-		date_part('year', time) "year",
-		date_part('month', time) "month",
-		date_part('day', time) "day",
-		sum(amount),
-		count(id),
-		user_id
-	FROM transactions
-	GROUP BY
-		"user_id",
-		"year",
-		"month",
-		"day";
+		transaction_and_tags.id,
+		transaction_and_tags.user_id,
+		transaction_and_tags.memo,
+		transaction_and_tags.amount,
+		generate_series(
+			transaction_schedules.start,
+			transaction_schedules.end,
+			(transaction_schedules.frequency || ' ' || transaction_schedules.unit)::interval
+		) AS time,
+		transaction_and_tags.tags,
+		true AS recurring
+	FROM transaction_and_tags
+	JOIN transaction_schedules ON transaction_and_tags.id = transaction_id;
 
-CREATE OR REPLACE VIEW transaction_months AS
+CREATE OR REPLACE VIEW transaction_and_spreads AS
+	SELECT *, false AS spread
+	FROM transaction_and_schedules
+	WHERE NOT EXISTS (
+		SELECT 1
+		FROM transaction_spreads
+		WHERE transaction_spreads.transaction_id = transaction_and_schedules.id
+	)
+	UNION ALL
 	SELECT
-		date_part('year', time) "year",
-		date_part('month', time) "month",
+		transaction_and_schedules.id,
+		transaction_and_schedules.user_id,
+		transaction_and_schedules.memo,
+		transaction_and_schedules.amount / date_part('day', (count || ' ' || unit)::interval) as amount,
+		generate_series(
+			transaction_and_schedules.time,
+			transaction_and_schedules.time + (count || ' ' || unit)::interval - '1 day'::interval,
+			'1 day'
+		) as time,
+		transaction_and_schedules.tags,
+		transaction_and_schedules.recurring,
+		true AS spread
+	FROM transaction_spreads
+	JOIN transaction_and_schedules on transaction_and_schedules.id = transaction_id;
+	
+CREATE OR REPLACE VIEW transaction_by_day AS
+	SELECT *, time::date as day
+	FROM transaction_and_spreads;
+
+CREATE OR REPLACE VIEW transaction_by_month AS
+	SELECT
+		date_trunc('month', day) as month,
 		sum(amount),
 		count(id),
 		user_id
-	FROM spend.transactions
+	FROM transaction_by_day
 	GROUP BY
-		"user_id",
-		"year",
+		user_id,
 		"month";
 
-CREATE OR REPLACE VIEW transaction_years AS
+CREATE OR REPLACE VIEW transaction_by_year AS
 	SELECT
-		date_part('year', time) "year",
-		sum(amount),
-		count(id),
+		date_trunc('year', month) as year,
+		sum(sum),
+		sum(count)::bigint as count,
 		user_id
-	FROM spend.transactions
+	FROM transaction_by_month
 	GROUP BY
-		"user_id",
+		user_id,
 		"year";
 
 -- application roles
@@ -166,3 +220,4 @@ $associate_tag_with_user$ LANGUAGE plpgsql;
 CREATE TRIGGER associate_tag_with_user_trigger
 BEFORE INSERT ON spend.tags
 FOR EACH ROW EXECUTE PROCEDURE associate_tag_with_user();
+

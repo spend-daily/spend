@@ -1,6 +1,5 @@
-import { AppBar, Button, Toolbar, Typography } from 'material-ui'
 import React, { Component } from 'react'
-import { BrowserRouter, NavLink, Route } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { ApolloLink } from 'apollo-link'
@@ -9,7 +8,9 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 
 import { HistoryAuthenticate } from './components/authenticate'
 import { refresh } from './components/authenticate/cognito'
+import auth0 from './components/authenticate/auth0'
 import { Home } from './components/home'
+import Callback from './components/callback'
 import $AddTransaction from './components/transactions/add'
 import Floaters from './components/floaters'
 import NavBar from './components/nav-bar'
@@ -21,9 +22,10 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: ApolloLink.from([
     new ApolloLink((operation, forward) => {
+      const token = localStorage.getItem('token')
       operation.setContext({
         headers: {
-          Authorization: localStorage.getItem('token') || null
+          Authorization: token || null
         }
       })
       return forward(operation)
@@ -41,8 +43,9 @@ class App extends Component {
         <BrowserRouter>
           <div className="App">
             <NavBar />
-            <Home />
             <Route exact path="/" component={HistoryAuthenticate} />
+            <Route path="/callback" component={Callback} />
+            <Route path="/home" component={Home} />
             <Route path="/home/add" component={$AddTransaction} />
             <Route path="/home/add-recurring" component={$AddTransaction} />
             <Floaters />
